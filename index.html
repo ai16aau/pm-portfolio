@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayodele Imhotep · Proof of Work</title>
+<meta name="description" content="The proof-of-work product portfolio of Ayodele Imhotep: shipped products, the decisions behind them, and numbers that survive being checked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --black:#0D0D0C; --cream:#F2F0EA; --yellow:#F0DA5E; --teal:#107A70;
+  --b1:#C9E36B; --b2:#F2B84B; --b3:#F27D6B; --b4:#B592F5; --b5:#5CC3EC; --b6:#7FD98F;
+  --b7:#F592C4; --b8:#F0DA5E; --b9:#98B3FF; --b10:#EE9A5C; --b11:#62D5C3;
+
+  /* light theme */
+  --bg:#F2F0EA; --ink:#0D0D0C; --ink2:#5c5949; --line:rgba(13,13,12,.16); --line-soft:rgba(13,13,12,.09);
+  --card:#faf8f3; --card2:#eceade;
+  --accent:#0d6b62; --accent-bright:#107A70; --yellow-ink:#6e6013; --yellow-wash:#f4e9ac;
+  --chart-bar:#107A70; --chart-bar2:#0d5f57; --chart-muted:#a8a394; --chart-grid:rgba(13,13,12,.12);
+  --dk-bg:#0D0D0C; --dk-card:#171714; --dk-ink:#F2F0EA; --dk-ink2:#b3af9f; --dk-line:rgba(242,240,234,.16);
+  --dk-accent:#62D5C3; --dk-yellow:#F0DA5E;
+  --warn-wash:#fbeeda; --warn-ink:#7a4a12;
+  --shadow:0 1px 2px rgba(13,13,12,.05),0 8px 28px rgba(13,13,12,.08);
+}
+:root[data-theme="dark"]{
+  --bg:#0D0D0C; --ink:#F2F0EA; --ink2:#aca894; --line:rgba(242,240,234,.17); --line-soft:rgba(242,240,234,.09);
+  --card:#161613; --card2:#1d1d19;
+  --accent:#62D5C3; --accent-bright:#62D5C3; --yellow-ink:#F0DA5E; --yellow-wash:#292513;
+  --chart-bar:#62D5C3; --chart-bar2:#8fe3d5; --chart-muted:#6d6a5e; --chart-grid:rgba(242,240,234,.13);
+  --dk-bg:#131310; --dk-card:#1c1c18; --dk-ink:#F2F0EA; --dk-ink2:#aca894; --dk-line:rgba(242,240,234,.16);
+  --dk-accent:#62D5C3; --dk-yellow:#F0DA5E;
+  --warn-wash:#2b2113; --warn-ink:#f2c46a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D0D0C; --ink:#F2F0EA; --ink2:#aca894; --line:rgba(242,240,234,.17); --line-soft:rgba(242,240,234,.09);
+    --card:#161613; --card2:#1d1d19;
+    --accent:#62D5C3; --accent-bright:#62D5C3; --yellow-ink:#F0DA5E; --yellow-wash:#292513;
+    --chart-bar:#62D5C3; --chart-bar2:#8fe3d5; --chart-muted:#6d6a5e; --chart-grid:rgba(242,240,234,.13);
+    --dk-bg:#131310; --dk-card:#1c1c18; --dk-ink:#F2F0EA; --dk-ink2:#aca894; --dk-line:rgba(242,240,234,.16);
+    --dk-accent:#62D5C3; --dk-yellow:#F0DA5E;
+    --warn-wash:#2b2113; --warn-ink:#f2c46a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
+  }
+}
+
+/* ============ base ============ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif;
+  font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+img,svg{max-width:100%;height:auto}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.measure{max-width:46rem}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+@media(max-width:640px){.wrap{padding:0 16px}}
+
+h1,h2,h3,h4{font-weight:700;line-height:1.12;margin:0 0 .5em;letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-stretch:82%;text-transform:uppercase;letter-spacing:.01em}
+h3{font-size:clamp(1.15rem,2vw,1.4rem)}
+h4{font-size:1rem;text-transform:uppercase;letter-spacing:.08em;font-stretch:88%}
+p{margin:0 0 1em}
+ul{padding-left:1.15em;margin:0 0 1em}
+li{margin:0 0 .45em}
+strong{font-weight:650}
+
+.kicker{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:.6em;margin-bottom:1.1em;
+}
+.kicker::before{content:"";width:26px;height:2px;background:var(--accent);flex:none}
+.sec{padding:clamp(3rem,7vw,5.5rem) 0}
+.sec-dark{background:var(--dk-bg);color:var(--dk-ink)}
+.sec-dark .kicker{color:var(--dk-accent)}
+.sec-dark .kicker::before{background:var(--dk-accent)}
+.sec-dark p, .sec-dark li{color:var(--dk-ink)}
+.sec-dark .dim{color:var(--dk-ink2)}
+.dim{color:var(--ink2)}
+.lead{font-size:1.13rem;line-height:1.6}
+
+/* category band motif */
+.band{display:flex;height:6px;width:100%}
+.band i{flex:1}
+.band i:nth-child(1){background:var(--b1)}.band i:nth-child(2){background:var(--b2)}
+.band i:nth-child(3){background:var(--b3)}.band i:nth-child(4){background:var(--b4)}
+.band i:nth-child(5){background:var(--b5)}.band i:nth-child(6){background:var(--b6)}
+.band i:nth-child(7){background:var(--b7)}.band i:nth-child(8){background:var(--b8)}
+.band i:nth-child(9){background:var(--b9)}.band i:nth-child(10){background:var(--b10)}
+.band i:nth-child(11){background:var(--b11)}
+
+/* ============ sticky index ============ */
+.topnav{
+  position:sticky;top:0;z-index:60;background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.topnav .inner{
+  display:flex;align-items:center;gap:1rem;max-width:1120px;margin:0 auto;padding:0 20px;height:52px;
+}
+.topnav .brand{font-weight:800;font-stretch:78%;text-transform:uppercase;letter-spacing:.02em;font-size:.9rem;white-space:nowrap;color:var(--ink);text-decoration:none}
+.topnav .brand b{color:var(--accent)}
+.navlinks{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:none;flex:1}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ink2);text-decoration:none;padding:.45em .65em;border-radius:6px;white-space:nowrap;
+}
+.navlinks a:hover{color:var(--ink);background:var(--card2)}
+.navlinks a.on{color:var(--accent);font-weight:600}
+.theme-btn{
+  flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:99px;width:34px;height:34px;cursor:pointer;display:grid;place-items:center;font-size:.9rem;
+}
+
+/* ============ hero ============ */
+.hero{background:var(--dk-bg);color:var(--dk-ink);position:relative;overflow:hidden}
+.hero .wrap{padding-top:clamp(3.5rem,8vw,6.5rem);padding-bottom:clamp(3rem,7vw,5.5rem);position:relative}
+.hero h1{
+  font-size:clamp(2.6rem,7.2vw,5.4rem);font-stretch:72%;text-transform:uppercase;
+  line-height:.98;letter-spacing:0;margin:.25em 0 .3em;
+}
+.hero h1 .y{color:var(--dk-yellow)}
+.hero .sub{max-width:44rem;color:var(--dk-ink2);font-size:clamp(1rem,1.6vw,1.2rem)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.06em;
+  border:1px solid var(--dk-line);color:var(--dk-ink2);border-radius:99px;padding:.42em .95em;white-space:nowrap;
+}
+.chip b{color:var(--dk-yellow);font-weight:600}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--dk-line);border:1px solid var(--dk-line);border-radius:14px;overflow:hidden;margin-top:2.4rem}
+.hero-stats>div{background:var(--dk-card);padding:1.05rem 1.15rem}
+.hero-stats .n{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.4rem,2.6vw,2rem);font-weight:600;color:var(--dk-yellow);line-height:1.1}
+.hero-stats .l{font-size:.76rem;color:var(--dk-ink2);margin-top:.3rem;line-height:1.35}
+@media(max-width:760px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ============ cards & callouts ============ */
+.card{background:var(--card);border:1px solid var(--line-soft);border-radius:14px;padding:1.4rem 1.5rem;box-shadow:var(--shadow)}
+.callout{
+  border-left:4px solid var(--yellow);background:var(--yellow-wash);
+  border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin:1.4rem 0;
+}
+.callout .t{font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--yellow-ink);margin-bottom:.35rem;font-family:'IBM Plex Mono',monospace}
+.callout p{margin:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* ============ tables ============ */
+.tblwrap{overflow-x:auto;border:1px solid var(--line-soft);border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th{
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink2);text-align:left;padding:.8em .95em;border-bottom:1.5px solid var(--line);white-space:nowrap;
+}
+td{padding:.72em .95em;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.63rem;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;border-radius:99px;padding:.28em .7em;white-space:nowrap;
+}
+.tag.ship{background:var(--accent);color:var(--bg)}
+:root[data-theme="dark"] .tag.ship{color:#0D0D0C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.ship{color:#0D0D0C}}
+.tag.defer{border:1.5px solid var(--chart-muted);color:var(--ink2);background:transparent}
+
+/* ============ figures ============ */
+figure{margin:1.8rem 0}
+figcaption{font-size:.8rem;color:var(--ink2);margin-top:.7rem;font-family:'IBM Plex Mono',monospace;line-height:1.5}
+.sec-dark figcaption{color:var(--dk-ink2)}
+.figpanel{background:var(--card);border:1px solid var(--line-soft);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow)}
+.sec-dark .figpanel{background:var(--dk-card);border-color:var(--dk-line)}
+svg text{font-family:'IBM Plex Mono',monospace}
+
+/* ============ persona cards ============ */
+.personas{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
+@media(max-width:860px){.personas{grid-template-columns:1fr}}
+.pcard{background:var(--dk-card);border:1px solid var(--dk-line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.pcard .phead{position:relative}
+.pcard .phead svg{display:block;width:100%}
+.pcard .pnum{
+  position:absolute;top:12px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;background:rgba(13,13,12,.72);color:var(--cream);
+  border-radius:99px;padding:.35em .8em;backdrop-filter:blur(4px);
+}
+.pcard .pbody{padding:1.25rem 1.35rem 1.4rem;color:var(--dk-ink)}
+.pcard h3{margin-bottom:.2rem}
+.pcard .psub{font-size:.82rem;color:var(--dk-ink2);margin-bottom:.9rem}
+.pcard ul{margin:0;font-size:.9rem;color:var(--dk-ink)}
+.pcard li{margin-bottom:.5em}
+.pcard .pquote{font-size:.8rem;color:var(--dk-ink2);border-top:1px solid var(--dk-line);margin-top:1rem;padding-top:.8rem}
+.pnote{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.04em;color:#0D0D0C;
+  background:var(--yellow);border-radius:8px;padding:.5em .8em;margin-bottom:.9rem;display:inline-block;font-weight:600;
+}
+
+/* ============ step flow / scoring diagram ============ */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.4rem 0}
+@media(max-width:860px){.flow{grid-template-columns:1fr}}
+.flow .st{background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.1rem 1.2rem;position:relative}
+.flow .st .sn{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dk-accent);font-weight:600;margin-bottom:.4rem}
+.flow .st h4{color:var(--dk-ink);margin-bottom:.35rem}
+.flow .st p{font-size:.86rem;color:var(--dk-ink2);margin:0}
+.flow .st .w{position:absolute;top:1rem;right:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--dk-yellow);font-weight:600}
+
+/* ============ requirement sets ============ */
+.req{border:1px solid var(--line-soft);border-radius:16px;background:var(--card);box-shadow:var(--shadow);margin-bottom:1.4rem;overflow:hidden}
+.req .rhead{display:flex;align-items:baseline;gap:1rem;padding:1.15rem 1.4rem;border-bottom:1px solid var(--line-soft);flex-wrap:wrap}
+.req .rn{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.95rem;color:var(--accent)}
+.req .rhead h3{margin:0;flex:1;min-width:12rem}
+.req .rserves{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.req .rbody{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:860px){.req .rbody{grid-template-columns:1fr}}
+.req .rcol{padding:1.15rem 1.4rem}
+.req .rcol+.rcol{border-left:1px solid var(--line-soft)}
+@media(max-width:860px){.req .rcol+.rcol{border-left:none;border-top:1px solid var(--line-soft)}}
+.req h5{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin:0 0 .5em;font-weight:600}
+.req ul{font-size:.88rem;margin-bottom:1.1em}
+.req .rcol>:last-child{margin-bottom:0}
+.oos{background:var(--card2);border-radius:10px;padding:.75rem .9rem;font-size:.84rem}
+.oos b{font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:.25em}
+
+/* ============ before/after ============ */
+.ba td:first-child{font-weight:600;width:32%}
+.ba .bcell{color:var(--ink2)}
+.ba .acell{font-weight:600;color:var(--accent)}
+
+/* ============ scenarios ============ */
+.scn{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.3rem 0 2rem}
+@media(max-width:860px){.scn{grid-template-columns:1fr}}
+.scn .sc{border-radius:16px;padding:1.3rem 1.4rem;font-size:.92rem}
+.scn .before{background:var(--card2);border:1px solid var(--line-soft)}
+.scn .after{background:var(--dk-card);border:1px solid var(--dk-line);color:var(--dk-ink)}
+.scn .sc .sl{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:.6rem}
+.scn .before .sl{color:var(--ink2)}
+.scn .after .sl{color:var(--dk-yellow)}
+.scn .sc p{margin:0}
+
+/* ============ storyboard ============ */
+.story{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+@media(max-width:980px){.story{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.story{grid-template-columns:1fr}}
+.frame{background:var(--card);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.frame svg{display:block;width:100%;background:var(--card2)}
+.frame .ft{padding:.9rem 1rem 1rem}
+.frame .ft .fn{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.3rem}
+.frame .ft p{font-size:.82rem;margin:0;color:var(--ink2)}
+
+/* ============ wireframes ============ */
+.wires{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media(max-width:980px){.wires{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+.phone{
+  background:#0D0D0C;border:1px solid rgba(242,240,234,.2);border-radius:26px;padding:10px;
+  box-shadow:var(--shadow);
+}
+.phone .screen{background:#141412;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-height:520px;color:#F2F0EA;font-size:.72rem;line-height:1.4}
+.phone .notch{height:20px;display:grid;place-items:center}
+.phone .notch i{width:64px;height:5px;border-radius:99px;background:rgba(242,240,234,.22)}
+.wlabel{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink2);margin-top:.8rem;line-height:1.5}
+.sec-dark .wlabel{color:var(--dk-ink2)}
+/* wire elements */
+.w-banner{background:#1d1d18;border-bottom:1px solid rgba(242,240,234,.12);padding:.6em .9em;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#cfcbbd}
+.w-banner b{color:#F0DA5E}
+.w-h{font-weight:700;font-size:.95rem;padding:.9em .9em .2em;font-stretch:85%}
+.w-opt{margin:.5em .9em;background:rgba(240,218,94,.14);border:1px solid rgba(240,218,94,.55);border-radius:8px;padding:.55em .7em;display:flex;justify-content:space-between;gap:.6em;align-items:center}
+.w-opt b{color:#F0DA5E;font-weight:600}
+.w-opt u{color:#62D5C3;text-decoration-thickness:1px;white-space:nowrap}
+.w-row{margin:.45em .9em;background:#1b1b17;border:1px solid rgba(242,240,234,.1);border-radius:10px;padding:.55em .7em;display:flex;gap:.6em}
+.w-row .cb{width:14px;height:14px;border:1.5px solid rgba(242,240,234,.45);border-radius:4px;flex:none;margin-top:2px}
+.w-row .cb.on{background:#F0DA5E;border-color:#F0DA5E}
+.w-row .rl b{display:block;font-weight:600}
+.w-row .rl span{color:#a8a496;font-size:.6rem}
+.w-bar{margin-top:auto;display:flex;gap:.5em;padding:.7em .9em;border-top:1px solid rgba(242,240,234,.12);background:#101010}
+.w-btn{border-radius:9px;padding:.55em .4em;text-align:center;font-weight:600;flex:1;font-size:.66rem}
+.w-btn.ghost{border:1px solid rgba(242,240,234,.35);color:#d9d5c7}
+.w-btn.line{border:1.5px solid #62D5C3;color:#62D5C3}
+.w-btn.fill{background:#F0DA5E;color:#0D0D0C}
+.w-card{margin:.45em .9em;background:#1b1b17;border:1px solid rgba(242,240,234,.1);border-radius:10px;padding:.6em .7em}
+.w-card .tt{display:flex;gap:.55em;align-items:center;margin-bottom:.5em}
+.w-card .th{width:30px;height:20px;border-radius:4px;background:#2c2c26;flex:none}
+.w-card .tt b{font-weight:600}
+.w-cats{display:flex;flex-wrap:wrap;gap:4px}
+.w-cats i{height:8px;border-radius:99px;flex:1 1 26%;background:#2c2c26;min-width:26%}
+.w-search{margin:.7em .9em;background:#1f1f1a;border:1px solid rgba(240,218,94,.5);border-radius:12px;padding:.7em .8em;box-shadow:0 0 0 4px rgba(240,218,94,.07)}
+.w-search .lbl{font-weight:600;margin-bottom:.5em}
+.w-seg{display:flex;gap:4px;margin-bottom:.5em}
+.w-seg i{flex:1;text-align:center;border:1px solid rgba(242,240,234,.25);border-radius:99px;padding:.3em 0;font-size:.58rem;color:#cfcbbd;font-style:normal}
+.w-seg i.on{background:#F2F0EA;color:#0D0D0C;font-weight:600;border-color:#F2F0EA}
+.w-dd{display:flex;gap:6px}
+.w-dd i{flex:1;border:1px solid rgba(242,240,234,.25);border-radius:8px;padding:.4em .5em;font-size:.58rem;color:#cfcbbd;font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-dd i b{color:#F2F0EA}
+.w-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:.2em .9em .9em}
+.w-grid i{aspect-ratio:2/3;background:#23231e;border-radius:6px;border:1px solid rgba(242,240,234,.07)}
+.w-grid i.hi{outline:2px solid #62D5C3;outline-offset:-2px}
+
+/* ============ gtm / metrics ============ */
+.metricgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+@media(max-width:760px){.metricgrid{grid-template-columns:1fr}}
+
+/* ============ caveats ============ */
+.caveats .card{border-left:5px solid var(--yellow);border-radius:4px 14px 14px 4px}
+.caveats .cnum{font-family:'IBM Plex Mono',monospace;color:var(--yellow-ink);font-weight:600;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+:root[data-theme="dark"] .caveats .cnum{color:var(--dk-yellow)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .caveats .cnum{color:var(--dk-yellow)}}
+.caveats p{margin:0;font-size:.95rem}
+
+/* ============ buttons ============ */
+.btnrow{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.7rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.5em;border-radius:99px;padding:.72em 1.35em;
+  font-weight:650;font-size:.92rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-y{background:var(--yellow);color:#0D0D0C}
+.btn-y:hover{box-shadow:0 6px 22px rgba(240,218,94,.28)}
+.btn-ghost{border-color:var(--dk-line);color:var(--dk-ink)}
+.btn-ghost:hover{border-color:var(--dk-ink2)}
+.btn-ghost-light{border-color:var(--line);color:var(--ink)}
+.navcta{
+  flex:none;font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;color:#0D0D0C;background:var(--yellow);
+  border-radius:99px;padding:.55em 1em;white-space:nowrap;
+}
+
+/* ============ at a glance ============ */
+.glance-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:1.8rem}
+@media(max-width:980px){.glance-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.glance-grid{grid-template-columns:1fr}}
+.gcard{
+  display:block;text-decoration:none;color:var(--ink);background:var(--card);
+  border:1px solid var(--line-soft);border-radius:14px;padding:1.15rem 1.2rem;box-shadow:var(--shadow);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.gcard:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(13,13,12,.06),0 14px 34px rgba(13,13,12,.12)}
+.gcard .gn{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.25rem;color:var(--accent);line-height:1.2}
+.gcard .gl{font-size:.82rem;color:var(--ink2);margin-top:.35rem;line-height:1.45}
+.gcard .gs{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow-ink);margin-top:.7rem;font-weight:600}
+.skillchips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+.skillchips a{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:.5em 1em;
+  transition:border-color .18s ease,color .18s ease;
+}
+.skillchips a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ============ persona photos ============ */
+.ph{position:relative;aspect-ratio:420/210;overflow:hidden;background:#1a1a17}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06) brightness(.94)}
+.ph::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(165deg,var(--tint,#107A70) 0%,rgba(13,13,12,0) 62%),linear-gradient(0deg,rgba(13,13,12,.62),rgba(13,13,12,0) 52%);
+  mix-blend-mode:multiply;opacity:.9;
+}
+.ph::before{content:"";position:absolute;inset:0;background:var(--tint,#107A70);mix-blend-mode:soft-light;opacity:.45;z-index:1}
+
+/* ============ motion ============ */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+.figpanel svg g.bars rect{transform:scaleX(0);transform-box:fill-box;transform-origin:left center;transition:transform .9s cubic-bezier(.22,.7,.25,1)}
+.figpanel.in svg g.bars rect{transform:scaleX(1)}
+.figpanel svg g.bars rect:nth-child(2){transition-delay:.08s}
+.figpanel svg g.bars rect:nth-child(3){transition-delay:.16s}
+.figpanel svg g.bars rect:nth-child(4){transition-delay:.24s}
+.figpanel svg g.bars rect:nth-child(5){transition-delay:.32s}
+.figpanel svg g.bars rect:nth-child(6){transition-delay:.4s}
+.figpanel svg g.bars rect:nth-child(7){transition-delay:.48s}
+@media (prefers-reduced-motion: reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .figpanel svg g.bars rect{transform:scaleX(1);transition:none}
+  .btn,.gcard{transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:2.2rem 0 3rem;font-size:.82rem;color:var(--ink2)}
+footer .mono{font-size:.72rem}
+
+.smallnote{font-size:.8rem;color:var(--ink2)}
+.sec-dark .smallnote{color:var(--dk-ink2)}
+.divider-band{height:6px}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Site navigation">
+  <div class="inner">
+    <a class="brand" href="#top">AYO IMHOTEP <b>/ Product portfolio</b></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="navcta" href="what-can-i-watch-now.html">Case study</a>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle colour theme" title="Toggle colour theme">◐</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="band" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <p class="kicker" style="color:var(--dk-accent)">Ayodele Imhotep · Product management portfolio</p>
+    <h1>Proof<br>of <span class="y">work</span></h1>
+    <p class="sub lead">I work across strategy, product and data: making features, products and services better for the people who use them, with a data lens. This is a proof-of-work portfolio, not a list of claims. Each case study is a product I designed, built and shipped, written up the way the work actually ran: the research, the trade-offs, the requirements, and numbers that survive being checked.</p>
+    <div class="btnrow">
+      <a class="btn btn-y" href="what-can-i-watch-now.html">Read the first case study</a>
+      <a class="btn btn-ghost" href="https://whatcaniwatchnow.com" target="_blank" rel="noopener">Try the live product ↗</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/ayoimhotep" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n">1</div><div class="l">product live on the open web, designed, built and shipped end to end</div></div>
+      <div><div class="n">479</div><div class="l">catalogue titles classified by hand against a framework I designed</div></div>
+      <div><div class="n">3</div><div class="l">sources of research evidence, allowed to disagree with each other</div></div>
+      <div><div class="n">9</div><div class="l">items scored with RICE: seven shipped, two deferred with reasons</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <p class="kicker">01 · Work</p>
+    <h2>Case studies</h2>
+    <p class="measure lead">Each project here is a real product with real traffic, written up the way the work actually ran: the research, the trade-offs, the requirements, and what was deliberately not built.</p>
+
+    <a href="what-can-i-watch-now.html" style="text-decoration:none;color:inherit;display:block;margin-top:2rem">
+      <article class="card" style="padding:0;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+        <div style="background:var(--dk-bg);color:var(--dk-ink);padding:2rem 2rem 1.8rem">
+          <div class="band" aria-hidden="true" style="margin:-2rem -2rem 1.6rem;width:auto"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dk-accent);margin-bottom:.6rem">Case study 01 · Live at whatcaniwatchnow.com</p>
+          <h3 style="font-size:clamp(1.5rem,3vw,2.1rem);font-stretch:78%;text-transform:uppercase;margin-bottom:.5rem">What Can I Watch Now</h3>
+          <p style="color:var(--dk-ink2);max-width:44rem;margin:0">A film and television recommendation tool built on the premise that choice paralysis is a data problem: a thumbs up records that you liked something, never what you liked about it. The case study covers the full first release cycle, from three sources of research evidence to a shipped build with verified before-and-after behaviour.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft)">
+          <div style="background:var(--card);padding:1rem 1.2rem"><div class="mono" style="font-weight:600;font-size:1.15rem;color:var(--accent)">23 of 34</div><div style="font-size:.76rem;color:var(--ink2)">visitors never started: the leak no interview could see</div></div>
+          <div style="background:var(--card);padding:1rem 1.2rem"><div class="mono" style="font-weight:600;font-size:1.15rem;color:var(--accent)">1 → 6</div><div style="font-size:.76rem;color:var(--ink2)">non-Anglophone titles in the first 24 shown</div></div>
+          <div style="background:var(--card);padding:1rem 1.2rem"><div class="mono" style="font-weight:600;font-size:1.15rem;color:var(--accent)">30 → 1</div><div style="font-size:.76rem;color:var(--ink2)">repeated question screens collapsed into one card</div></div>
+          <div style="background:var(--card);padding:1rem 1.2rem"><div class="mono" style="font-weight:600;font-size:1.15rem;color:var(--accent)">Read →</div><div style="font-size:.76rem;color:var(--ink2)">research, RICE, requirements, GTM and the caveats</div></div>
+        </div>
+      </article>
+    </a>
+
+    <div class="card" style="margin-top:1.3rem;background:var(--card2);border-style:dashed;box-shadow:none">
+      <p style="margin:0;font-size:.9rem" class="dim">More projects are on their way. Each one lands here as a live product with a full case study behind it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark" id="skills">
+  <div class="wrap">
+    <p class="kicker">02 · Skills</p>
+    <h2>What the work demonstrates</h2>
+    <p class="measure lead">Every skill below is shown, not claimed: each one links to the part of the case study where it is exercised on a real product.</p>
+    <div class="grid3" style="margin-top:2rem">
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">User research</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">Moderated sessions turned into personas, and a funnel that caught the leak no interview could reach.</p>
+        <a href="what-can-i-watch-now.html#validation" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">Problem validation →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Data integrity</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">A flattering traffic number identified as crawler noise and discarded in favour of the honest denominator.</p>
+        <a href="what-can-i-watch-now.html#discarded" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">A metric I discarded →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Root-cause analysis</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">Users diagnosed a missing skip button; a product check found there was no skip button to make prominent.</p>
+        <a href="what-can-i-watch-now.html#catalogue" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">The catalogue finding →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Prioritisation</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">Nine items scored with RICE on measured reach, including shipping the lowest scorer and saying exactly why.</p>
+        <a href="what-can-i-watch-now.html#rice" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">RICE →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Requirements writing</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">Five requirement sets, each with the persona served, explicit out-of-scope decisions, and the metrics to judge it on.</p>
+        <a href="what-can-i-watch-now.html#shipped" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">What shipped →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Scope control</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">A requested feature turned down with a data-grounded reason, and the strongest fix deferred so a smaller one could be measured first.</p>
+        <a href="what-can-i-watch-now.html#notdone" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">What I did not do →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Go-to-market</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">An honest read of owned-channel results, with activation, not traffic, chosen as the primary metric and targets set against baselines.</p>
+        <a href="what-can-i-watch-now.html#gtm" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">GTM →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Instrumentation</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">Events designed before outcomes are claimed, including a warning not to read the renamed series as one.</p>
+        <a href="what-can-i-watch-now.html#notdone" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">Instrumentation added →</a>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:14px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Privacy by design</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0 0 .6rem">No server, no accounts, no personal data: a constraint that produced a better returning-user feature, not a worse one.</p>
+        <a href="what-can-i-watch-now.html#shipped" style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dk-accent)">Returning without repeating →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="about">
+  <div class="wrap">
+    <p class="kicker">03 · About</p>
+    <h2>Strategy, product and data</h2>
+    <div class="measure">
+      <p class="lead">I'm Ayodele Imhotep. I sit across strategy, product and data rather than in any one of them, and I'm happiest where the three meet: working out what a product should do for the people using it, then proving it with numbers.</p>
+      <p>My background spans management consulting and strategy and operations in global payments, where I own metrics and reporting across a large control framework and build the dashboards and semantic models that senior stakeholders run on. Alongside that, I design and ship my own products end to end, from the first persona to the instrumentation plan, and write the honest version of how each release went. That written-up honesty is what this portfolio is for.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark" id="contact">
+  <div class="wrap">
+    <p class="kicker">04 · Contact</p>
+    <h2>Get in touch</h2>
+    <p class="measure lead">The quickest way to reach me is LinkedIn.</p>
+    <div class="btnrow">
+      <a class="btn btn-y" href="https://www.linkedin.com/in/ayoimhotep" target="_blank" rel="noopener">LinkedIn · Ayodele Imhotep ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="band" aria-hidden="true" style="margin-bottom:2.2rem"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <p><strong style="color:var(--ink)">Ayodele Imhotep</strong> · product portfolio.</p>
+    <p class="mono">Designed and written by Ayodele Imhotep. Every figure in these case studies is a verified behaviour of a shipped build or a measured baseline.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  var saved=null; try{saved=localStorage.getItem('wciwn-theme')}catch(e){}
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved)}
+  btn.addEventListener('click',function(){
+    var dark = root.getAttribute('data-theme')==='dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('wciwn-theme',next)}catch(e){}
+  });
+  var links=[].slice.call(document.querySelectorAll('#navlinks a'));
+  var map=links.map(function(a){return {a:a, el:document.querySelector(a.getAttribute('href'))}}).filter(function(m){return m.el});
+  function spy(){
+    var y=window.scrollY+120, cur=null;
+    map.forEach(function(m){ if(m.el.offsetTop<=y) cur=m; });
+    links.forEach(function(a){a.classList.remove('on')});
+    if(cur){cur.a.classList.add('on')}
+  }
+  window.addEventListener('scroll',spy,{passive:true}); spy();
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    var sel='.sec h2,.sec .lead,.card,.grid3>div,.hero-stats,.btnrow';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    els.forEach(function(el){el.classList.add('rv')});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var el=e.target;
+          var sibs=els.filter(function(x){return x.parentNode===el.parentNode});
+          var idx=sibs.indexOf(el);
+          el.style.transitionDelay=(Math.max(0,idx)%6*70)+'ms';
+          el.classList.add('in');
+          io.unobserve(el);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el)});
+    var counters=[].slice.call(document.querySelectorAll('.hero-stats .n'));
+    var cio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el=e.target; cio.unobserve(el);
+        var raw=el.textContent.trim(); var suffix=raw.replace(/[0-9]/g,''); var target=parseInt(raw,10);
+        if(isNaN(target)) return;
+        var t0=null;
+        function step(t){
+          if(!t0)t0=t; var p=Math.min(1,(t-t0)/900); p=1-Math.pow(1-p,3);
+          el.textContent=Math.round(target*p)+suffix;
+          if(p<1)requestAnimationFrame(step); else el.textContent=raw;
+        }
+        requestAnimationFrame(step);
+      });
+    },{threshold:0.5});
+    counters.forEach(function(el){cio.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>
