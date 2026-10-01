@@ -1,0 +1,1405 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What Can I Watch Now, a case study by Ayodele Imhotep</title>
+<meta name="description" content="Case study: What Can I Watch Now, a film and television recommendation tool. Research, prioritisation, requirements, release and results, by Ayodele Imhotep.">
+<script>try{var t=localStorage.getItem('pow-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Hanken+Grotesk:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="inner">
+    <a class="brand" href="index.html"><span class="brand-name">Ayodele Imhotep</span><span class="brand-tag">Proof of work</span></a>
+    <nav class="main-links" aria-label="Main"><a href="work.html" aria-current="page">Work</a><a href="https://www.linkedin.com/in/ayoimhotep" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ext"><path d="M7 17L17 7M9 7h8v8"/></svg></a></nav>
+    <button class="theme-toggle" id="themeBtn" type="button" aria-label="Switch colour theme"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></button>
+  </div>
+</header>
+<div class="case-bar">
+  <div class="inner">
+    <span class="ct">What Can I Watch Now</span>
+    <span class="cur" id="curSection">Overview</span>
+    <a class="live" href="https://whatcaniwatchnow.com" target="_blank" rel="noopener">Live site</a>
+    <button class="toc-btn" id="tocOpen" type="button" aria-expanded="false" aria-controls="tocPanel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>Contents</button>
+  </div>
+  <div class="progress" id="readProgress" aria-hidden="true"></div>
+</div>
+<div class="toc-panel" id="tocPanel" hidden>
+  <div class="toc-scrim" data-toc-close></div>
+  <aside class="toc-sheet" role="dialog" aria-modal="true" aria-labelledby="tocTitle">
+    <header><b id="tocTitle">Contents</b><button class="toc-close" type="button" data-toc-close aria-label="Close contents"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+    <nav aria-label="Case study sections"><p class="toc-group">Overview</p><ol><li><a href="#glance" data-toc>The two-minute version</a></li><li><a href="#personas" data-toc>The four personas</a></li><li><a href="#screens" data-toc>What changed in the product</a></li></ol><p class="toc-group">Evidence and decisions</p><ol><li><a href="#validation" data-toc>Three sources of evidence</a></li><li><a href="#beforeafter" data-toc>Before and after</a></li><li><a href="#rice" data-toc>How I prioritised</a></li><li><a href="#process" data-toc>How the release ran</a></li><li><a href="#catalogue" data-toc>The catalogue finding</a></li></ol><p class="toc-group">Design</p><ol><li><a href="#wireframes" data-toc>Wireframes</a></li><li><a href="#storyboard" data-toc>Storyboard</a></li></ol><p class="toc-group">Detail</p><ol><li><a href="#product" data-toc>How it works</a></li><li><a href="#constraints" data-toc>Constraints</a></li><li><a href="#discarded" data-toc>A metric I discarded</a></li><li><a href="#shipped" data-toc>Requirements</a></li><li><a href="#scenarios" data-toc>Scenarios</a></li></ol><p class="toc-group">Launch and results</p><ol><li><a href="#gtm" data-toc>Go-to-market</a></li><li><a href="#notdone" data-toc>What I chose not to do</a></li><li><a href="#results" data-toc>Results so far</a></li><li><a href="#caveats" data-toc>Caveats</a></li></ol></nav>
+  </aside>
+</div>
+<main id="main">
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid-case">
+      <div>
+        <p class="kicker">Case study</p>
+        <h1>What Can I Watch Now</h1>
+        <p class="sub lead">A film and TV recommendation tool that I designed and built, live at whatcaniwatchnow.com. This case study covers its first release: what I assumed at the start, what the research showed me, and what I changed as a result.</p>
+        <div class="btnrow">
+      <a class="btn btn-y" href="https://whatcaniwatchnow.com" target="_blank" rel="noopener">Try the live product</a>
+      <a class="btn btn-ghost" href="#glance">Read the short version</a>
+      <a class="btn btn-ghost" href="work.html">All case studies</a>
+    </div>
+        <div class="hero-meta">
+      <div class="chip"><b>Live</b>: whatcaniwatchnow.com</div>
+      <div class="chip"><b>No server</b>: all scoring in the browser</div>
+      <div class="chip"><b>No accounts</b>: no personal data collected</div>
+      <div class="chip"><b>Hosting</b>: Cloudflare Pages, cookieless analytics</div>
+    </div>
+      </div>
+      <div class="hero-collage" aria-hidden="true">
+        <span><img src="img/wciwn-landing.jpg" alt=""></span>
+        <span><img src="img/wciwn-step1-optional.jpg" alt=""></span>
+        <span><img src="img/wciwn-picker-korea.jpg" alt=""></span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n">479</div><div class="l">titles classified by hand: 229 films, 250 series</div></div>
+      <div><div class="n">61</div><div class="l">specific reasons across 11 categories, plus 9 moods</div></div>
+      <div><div class="n">3</div><div class="l">moderated user sessions, in person</div></div>
+      <div><div class="n">12%</div><div class="l">completion from first visit before the release: 4 of 34</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="glance">
+  <div class="wrap">
+    <h2>The two-minute version</h2>
+    <p class="measure lead">If you only have two minutes, start here. The four cards below link to the parts I'd most want you to read. Every number on this page was measured, or checked in the live build. None of them are forecasts.</p>
+
+    <dl class="ctx">
+      <div><dt>My role</dt><dd>Everything from the research to the requirements, including the product design and the data. I directed the build and tested it before release (<a href="#product">how it was built</a>).</dd></div>
+      <div><dt>Timeline</dt><dd>The user sessions and the funnel read came first. The changes then went through five rounds of review and were all released together, on the same day.</dd></div>
+      <div><dt>Team</dt><dd>Just me, with three research participants.</dd></div>
+      <div><dt>Tools</dt><dd>Cookieless analytics (GoatCounter), Cloudflare Pages and its analytics, the TMDB API, and headless-browser testing.</dd></div>
+    </dl>
+
+    <div class="glance-grid">
+      <a class="gcard" href="#validation">
+        <div class="gn">23 of 34</div>
+        <div class="gl">first-time visitors left without starting. The interviews couldn't have shown me this, because both people had already agreed to try it. The funnel did.</div>
+        <div class="gs">Problem validation</div>
+      </a>
+      <a class="gcard" href="#catalogue">
+        <div class="gn">1 to 6</div>
+        <div class="gl">non-Anglophone titles in the first 24 shown. A user told me there was no Korean content. There were six Korean titles, but the ranking buried them.</div>
+        <div class="gs">The catalogue finding</div>
+      </a>
+      <a class="gcard" href="#beforeafter">
+        <div class="gn">30 to 1</div>
+        <div class="gl">question cards for someone who picked 30 titles. Now there is one card with eight choices, because the model was discarding the repeated answers anyway.</div>
+        <div class="gs">Measured before and after</div>
+      </a>
+      <a class="gcard" href="#rice">
+        <div class="gn">7 of 9</div>
+        <div class="gl">prioritised changes shipped. I held two back and explain why, including one a user asked for that wouldn't have changed a single recommendation.</div>
+        <div class="gs">Prioritisation</div>
+      </a>
+    </div>
+
+    <h3 style="margin-top:2.6rem">Skills in this case study</h3>
+    <div class="skillchips">
+      <a href="#validation">User research</a>
+      <a href="#validation">Funnel analytics</a>
+      <a href="#discarded">Data integrity</a>
+      <a href="#catalogue">Root-cause analysis</a>
+      <a href="#rice">RICE prioritisation</a>
+      <a href="#shipped">Requirements writing</a>
+      <a href="#notdone">Scope control</a>
+      <a href="#gtm">Go-to-market</a>
+      <a href="#notdone">Instrumentation</a>
+      <a href="#shipped">Privacy by design</a>
+      <a href="#wireframes">UX and wireframing</a>
+      <a href="#caveats">Measurement</a>
+    </div>
+    <h3 style="margin-top:2.2rem">Working documents</h3>
+    <ul class="artefacts">
+      <li><a href="#personas">Personas</a><span>one initial, three from research</span></li>
+      <li><a href="#screens">Product screenshots</a><span>each mapped to a pain point</span></li>
+      <li><a href="#validation">Funnel analysis</a><span>five steps, first visits</span></li>
+      <li><a href="#rice">Prioritisation matrix</a><span>RICE, nine items</span></li>
+      <li><a href="#process">Release log</a><span>five review rounds</span></li>
+      <li><a href="#shipped">Requirements (PRD)</a><span>five requirement sets</span></li>
+      <li><a href="#wireframes">Wireframes</a><span>three phone screens</span></li>
+      <li><a href="#storyboard">Storyboard</a><span>four frames</span></li>
+      <li><a href="#gtm">Go-to-market plan</a><span>baselines and targets</span></li>
+      <li><a href="#notdone">Instrumentation plan</a><span>events added</span></li>
+    </ul>
+
+  </div>
+</section>
+
+<section class="sec doc" id="personas">
+  <div class="wrap">
+    <h2>The four personas</h2>
+    <p class="measure lead">Persona 1 is the person I had in mind before I built anything, and I used it to work out what the product needed to do. Personas 2 to 4 come from the three user sessions, and they're who this release was built for. Most of the changes came from the differences between them.</p>
+
+    <div class="personas" style="margin-top:2rem">
+
+      <!-- Persona 1 -->
+      <article class="pcard">
+        <div class="phead">
+          <span class="pnum">Persona 1</span>
+          <div class="ph" style="--tint:#2743C9">
+            <img src="https://images.unsplash.com/photo-1635341539956-f71faf82d9df?auto=format&fit=crop&crop=faces&w=900&h=460&q=80" alt="Portrait photograph representing persona 1, the invested viewer" loading="lazy">
+          </div>
+        </div>
+        <div class="pbody">
+          <h3>Film-Night Farah</h3>
+          <p class="psub">The invested viewer. Written before the build, as the person the original product was designed for.</p>
+          <ul>
+            <li>Happy to spend real time getting a better recommendation. They'd sit down with a laptop or in front of the TV to do it, rather than check their phone in a queue.</li>
+            <li>Willing to answer a detailed question about every title picked, across a long list, because richer answers should mean a sharper result.</li>
+            <li>Already sold on the premise that a thumbs up is not enough, so needs no persuading on the landing page.</li>
+            <li>Watches mostly mainstream US and UK film and television, so an overwhelmingly US and UK catalogue fits.</li>
+            <li>Comes once, gets a great list, and has no need to come back.</li>
+          </ul>
+          <p class="pquote">Every one of those assumptions turned out to describe a minority of actual traffic. The next three personas are based on the people who actually used it.</p>
+        </div>
+      </article>
+
+      <!-- Persona 2 -->
+      <article class="pcard">
+        <div class="phead">
+          <span class="pnum">Persona 2</span>
+          <div class="ph" style="--tint:#2743C9">
+            <img src="https://images.unsplash.com/photo-1592621385645-e41659e8aabe?auto=format&fit=crop&crop=faces&w=900&h=460&q=80" alt="Portrait photograph representing persona 2, the viewer whose taste runs against the default" loading="lazy">
+          </div>
+        </div>
+        <div class="pbody">
+          <h3>K-Drama Kate</h3>
+          <p class="psub">The viewer whose taste runs against the default. From User A: a parent of two, a heavy watcher of Korean drama and international film. She completed the journey and liked her recommendations.</p>
+          <p style="font-size:.9rem">What she said:</p>
+          <ul>
+            <li>She could not select any Korean shows or films from the list of titles.</li>
+            <li>The mood step offered no international options, so her choices felt limited to Western and Hollywood productions.</li>
+            <li>She was happy with the recommendations but felt they could be more diverse in international reach.</li>
+            <li>Having picked her titles, she assumed that was the end, and was confused to then be asked why she liked each one.</li>
+            <li>Because she had picked a lot of titles, being met with that many options to work through felt daunting.</li>
+            <li>Told afterwards that the step was optional and skippable, she said she had not noticed.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Persona 3 -->
+      <article class="pcard">
+        <div class="phead">
+          <span class="pnum">Persona 3</span>
+          <div class="ph" style="--tint:#2743C9">
+            <img src="https://images.unsplash.com/photo-1544168190-79c17527004f?auto=format&fit=crop&crop=faces&w=900&h=460&q=80" alt="Portrait photograph representing persona 3, the first-time visitor" loading="lazy">
+          </div>
+        </div>
+        <div class="pbody">
+          <h3>First-Timer Theo</h3>
+          <p class="psub">The first-time visitor. From User B: a 29-year-old privacy lawyer at a payments company. He did not complete the journey.</p>
+          <p style="font-size:.9rem">What he said:</p>
+          <ul>
+            <li>He liked the look of the app.</li>
+            <li>He clicked lots of titles he liked, and thought that was the end of the journey and that it would then give him recommendations.</li>
+            <li>He then saw he had to say why he liked each one, and gave up because the idea of doing that was daunting.</li>
+            <li>Told afterwards it was optional, he said it had not been obvious.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Persona 4 -->
+      <article class="pcard">
+        <div class="phead">
+          <span class="pnum">Persona 4</span>
+          <div class="ph" style="--tint:#2743C9">
+            <img src="https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?auto=format&fit=crop&crop=faces&w=900&h=460&q=80" alt="Portrait photograph representing persona 4, the returner" loading="lazy">
+          </div>
+        </div>
+        <div class="pbody">
+          <h3>Returning Rachel</h3>
+          <p class="psub">The returner. From User C.</p>
+          <ul>
+            <li>Asked whether preferences could be saved, so that coming back later in a completely different mood would not mean doing the whole journey again.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <p class="smallnote" style="margin-top:1.2rem">Persona photographs are free stock imagery, not the research participants; credits are at the foot of the page. Persona 1's detail beyond the design's own assumptions is inferred from what the original product was built to do.</p>
+  </div>
+</section>
+
+<section class="sec" id="screens">
+  <div class="wrap">
+    <h2>What changed in the product</h2>
+    <p class="measure">These are screenshots of the live product on a phone, since that's where 63% of visits come from. Under each one is the problem it was meant to fix and what I changed.</p>
+    <div class="shots">
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-landing.jpg" alt="The live landing page on a phone: the product name, one line on what it does, a Get started now button, and a box to paste a code from last time." loading="lazy" width="390" height="844"></div>
+        <figcaption>
+          <h3>The landing page</h3>
+          <p class="sp"><b>The problem.</b> 23 of 34 first visitors landed and never started. Neither interviewee could have raised it, because both had already agreed to try the tool.</p>
+          <p class="sc"><b>What changed.</b> One line on what the tool does and a single button above the fold, with the explanation collapsed. Returning visitors can paste their code straight in.</p>
+          <p class="sr"><a href="#req3">Requirement sets 3 and 4</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-step1-optional.jpg" alt="Step 1 of 4 on a phone: a step banner naming what comes next, a highlighted "This part is optional" line with "Skip to next page", and the category list with Back, Skip this and Continue buttons." loading="lazy" width="390" height="844"></div>
+        <figcaption>
+          <h3>Step 1: what you like</h3>
+          <p class="sp"><b>The problem.</b> Users A and B both thought picking titles was the end, and neither noticed the step was optional. The skip control had never rendered at all.</p>
+          <p class="sc"><b>What changed.</b> A step banner with the number, name, progress and what comes next. "This part is optional" is highlighted, with a skip beside it and another in the action bar. One card replaces the per-title questions.</p>
+          <p class="sr"><a href="#req1">Requirement sets 1 and 3</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-picker-made-in.jpg" alt="Step 2 of 4, the title picker, with the Made in dropdown open showing Korea, Japan, Chinese-language, South Asia and Europe, all selected." loading="lazy" width="390" height="844"></div>
+        <figcaption>
+          <h3>Step 2: the Made in filter</h3>
+          <p class="sp"><b>The problem.</b> User A could not select any Korean shows or films. There was no language, country or region filter anywhere in the product.</p>
+          <p class="sc"><b>What changed.</b> A Made in dropdown beside Genre, using the same pattern as every other filter: everything selected by default, with Select all and Clear.</p>
+          <p class="sr"><a href="#req2">Requirement set 2</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-picker-korea.jpg" alt="The title picker filtered to Korea, showing Squid Game and Parasite at the top of the grid." loading="lazy" width="390" height="844"></div>
+        <figcaption>
+          <h3>Step 2: filtered to Korea</h3>
+          <p class="sp"><b>The problem.</b> The six Korean titles existed but sat as deep as 430th in the default order.</p>
+          <p class="sc"><b>What changed.</b> One tap on Korea and all six Korean titles are on one screen. The default order now draws non-US/UK titles forward too.</p>
+          <p class="sr"><a href="#beforeafter">Measured before and after</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-mood-region-language.jpg" alt="Step 3 of 4, the mood step, with mood options above and dropdowns for Made, From (set to Korea), Language (set to Korean) and Anything else." loading="lazy" width="390" height="844"></div>
+        <figcaption>
+          <h3>Step 3: region and language</h3>
+          <p class="sp"><b>The problem.</b> The mood step offered no international options, so User A's choices felt limited to Western and Hollywood productions.</p>
+          <p class="sc"><b>What changed.</b> From and Language dropdowns on the mood step. The region chosen in the picker carries forward, so nobody answers the same question twice.</p>
+          <p class="sr"><a href="#req2">Requirement set 2</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-results-code.jpg" alt="Step 4 of 4, the results page, with a "Keep this code to come back" box at the top holding a 26-character code and a Copy my code button." loading="lazy" width="390" height="560"></div>
+        <figcaption>
+          <h3>Step 4: the code</h3>
+          <p class="sp"><b>The problem.</b> User C asked for preferences to be saved, so coming back in a different mood would not mean doing the whole journey again.</p>
+          <p class="sc"><b>What changed.</b> A code at the top of the results that holds everything chosen. Pasting it on the landing page goes straight to the mood step. Nothing is stored on a server.</p>
+          <p class="sr"><a href="#req4">Requirement set 4</a></p>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot-img"><img src="img/wciwn-keep-and-copy.jpg" alt="A recommendation card for Schitt's Creek marked Kept, and below it the Copy my list button with Email it to me instead as the secondary option." loading="lazy" width="390" height="663"></div>
+        <figcaption>
+          <h3>Step 4: keeping the list</h3>
+          <p class="sp"><b>The problem.</b> No copy or email event had ever fired, so none of the four people who finished took their list away.</p>
+          <p class="sc"><b>What changed.</b> Keep this one on every recommendation. Copy my list is now the primary action and email the secondary one, with kept titles first.</p>
+          <p class="sr"><a href="#req5">Requirement set 5</a></p>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="smallnote" style="margin-top:1rem">Captured from whatcaniwatchnow.com at 390 pixels wide.</p>
+  </div>
+</section>
+
+<section class="sec sec-dark doc" id="validation">
+  <div class="wrap">
+    <h2>Three sources of evidence</h2>
+    <p class="measure lead">I checked the problem three ways: moderated sessions with users, the journey funnel from the analytics, and a check of how the product itself behaved. They didn't all agree, and the places where they disagreed turned out to be the most useful.</p>
+
+    <div class="grid3" style="margin-top:2rem">
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.5rem">Source 1</div>
+        <h4 style="color:var(--dk-ink)">Moderated user sessions</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0">Three users, in person: personas 2 to 4 above.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.5rem">Source 2</div>
+        <h4 style="color:var(--dk-ink)">The journey funnel</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0">Cookieless analytics covering the product's full life to the pre-release read: 107 visits.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.5rem">Source 3</div>
+        <h4 style="color:var(--dk-ink)">The product's own behaviour</h4>
+        <p style="font-size:.88rem;color:var(--dk-ink2);margin:0">A check of the build and the catalogue against what the users described.</p>
+      </div>
+    </div>
+
+    <figure>
+      <div class="figpanel">
+        <svg viewBox="0 0 740 296" role="img" aria-label="Journey funnel bar chart: landed 34, reached the title picker 11, reached the reasons screen 6, reached the mood screen 5, received a list 4">
+          <g font-size="11" fill="var(--dk-ink2)">
+            <text x="192" y="44" text-anchor="end">Landed (first visit)</text>
+            <text x="192" y="96" text-anchor="end">Reached the title picker</text>
+            <text x="192" y="148" text-anchor="end">Reached the reasons screen</text>
+            <text x="192" y="200" text-anchor="end">Reached the mood screen</text>
+            <text x="192" y="252" text-anchor="end">Received a list</text>
+          </g>
+          <g class="bars" fill="var(--dk-accent)">
+            <rect x="202" y="30" width="470" height="22" rx="4"/>
+            <rect x="202" y="82" width="152" height="22" rx="4"/>
+            <rect x="202" y="134" width="83" height="22" rx="4"/>
+            <rect x="202" y="186" width="69" height="22" rx="4"/>
+            <rect x="202" y="238" width="55" height="22" rx="4"/>
+          </g>
+          <g font-size="13" font-weight="600" fill="var(--dk-ink)">
+            <text x="664" y="46" text-anchor="end" fill="var(--bg)">34</text>
+            <text x="362" y="98">11</text>
+            <text x="293" y="150">6</text>
+            <text x="279" y="202">5</text>
+            <text x="265" y="254">4</text>
+          </g>
+          <g font-size="10.5" fill="var(--dk-ink2)">
+            <text x="732" y="98" text-anchor="end">32% held</text>
+            <text x="732" y="150" text-anchor="end">55% held</text>
+            <text x="732" y="202" text-anchor="end">83% held</text>
+            <text x="732" y="254" text-anchor="end">80% held</text>
+          </g>
+          <g stroke="var(--dk-yellow)" fill="none" stroke-width="1.5">
+            <path d="M672 56 v12 h-304 v-6"/>
+          </g>
+          <text x="672" y="79" text-anchor="end" font-size="10.5" fill="var(--dk-yellow)">23 of 34 landed and never started</text>
+        </svg>
+      </div>
+      <figcaption>The journey funnel, first visits, the product's full life to the pre-release read. Completion from first visit: 4 of 34, 12%. Each step's percentage is held from the previous step.</figcaption>
+    </figure>
+
+    <div class="grid2">
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <h5 style="font-family:'Public Sans',system-ui,sans-serif;font-size:.64rem;letter-spacing:.01em;color:var(--dk-ink2);margin:0 0 .8em;font-weight:600">Also from that read</h5>
+        <ul style="font-size:.9rem;margin:0">
+          <li>63% of visits were on phones (46% phones, 17% tablets and large phones).</li>
+          <li>64% United Kingdom, 27% United States.</li>
+          <li>No copy or email event had ever fired, so none of the four finishers took their list away.</li>
+          <li>Tagged inbound: <span class="mono">from/linkedin</span> fired 6 times, <span class="mono">from/substack</span> never.</li>
+        </ul>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <h5 style="font-family:'Public Sans',system-ui,sans-serif;font-size:.64rem;letter-spacing:.01em;color:var(--dk-yellow);margin:0 0 .8em;font-weight:600">Where the funnel disagreed with the interviews</h5>
+        <p style="font-size:.9rem;margin:0">The reasons screen lost one person in six, which is User B and no more. The larger leak was earlier: 23 of 34 people landed and never started at all. Neither interviewee mentioned it, and neither could have, because both were sitting with me and had already agreed to try the tool. Qualitative research is structurally blind to the people who leave before they become users.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.6rem">Source 3: what the product check found</h3>
+    <p class="measure">Rather than act on the users' explanation of what had gone wrong, I had the product checked against what they described. Three things came out of it:</p>
+    <div class="grid3">
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.8rem;color:var(--dk-yellow);font-weight:600;margin-bottom:.5rem">1</div>
+        <p style="font-size:.9rem;margin:0">The skip control was bound to a step that had been removed from the flow, so it never rendered anywhere in the product.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.8rem;color:var(--dk-yellow);font-weight:600;margin-bottom:.5rem">2</div>
+        <p style="font-size:.9rem;margin:0">The only "this step is optional" wording sat in a bar that is hidden below 560 pixels of screen width, which is 63% of traffic. So on a phone there was no skip control and no optional text. Neither user failed to notice anything; there was nothing to notice.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <div style="font-family:'Public Sans',system-ui,sans-serif;font-size:.8rem;color:var(--dk-yellow);font-weight:600;margin-bottom:.5rem">3</div>
+        <p style="font-size:.9rem;margin:0">The scoring already pooled every per-title answer into one global tally and never read which title an answer came from. Only the "similar to [title]" sentence in the results used it. So the screen people were abandoning was asking for work the model then discarded.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="t">Why the check mattered</div>
+      <p style="color:var(--ink)">Taking the users' diagnosis at face value would have led to making the skip button more prominent, which would have achieved nothing, because there was no skip button.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark doc" id="beforeafter">
+  <div class="wrap">
+    <h2>Before and after the release</h2>
+    <p class="measure lead">I checked each of these in the live build. They describe what the product now does. Whether it changes what people do is for the next funnel read.</p>
+
+    <figure>
+      <div class="tblwrap" style="background:var(--dk-card);border-color:var(--dk-line)">
+        <table class="ba" style="color:var(--dk-ink)">
+          <thead><tr>
+            <th></th><th style="color:var(--dk-ink2)">Before</th><th style="color:var(--dk-yellow)">After</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Skip controls on the optional step</td><td class="bcell" style="color:var(--dk-ink2)">0</td><td class="acell" style="color:var(--dk-accent)">4 signals in 4 positions</td></tr>
+            <tr><td>The optional step, for someone who picked 30 titles</td><td class="bcell" style="color:var(--dk-ink2)">30 expandable cards, 11 categories inside each</td><td class="acell" style="color:var(--dk-accent)">1 card, 8 choices, one tap each</td></tr>
+            <tr><td>Non-US/UK titles in the first 24 shown</td><td class="bcell" style="color:var(--dk-ink2)">1</td><td class="acell" style="color:var(--dk-accent)">6</td></tr>
+            <tr><td>Oldboy's position in the default order</td><td class="bcell" style="color:var(--dk-ink2)">430th of 479</td><td class="acell" style="color:var(--dk-accent)">136th</td></tr>
+            <tr><td>Burning / The Handmaiden / Train to Busan</td><td class="bcell" style="color:var(--dk-ink2)">291st / 343rd / 347th</td><td class="acell" style="color:var(--dk-accent)">60th / 80th / 84th</td></tr>
+            <tr><td>Squid Game / Parasite</td><td class="bcell" style="color:var(--dk-ink2)">11th / 59th</td><td class="acell" style="color:var(--dk-accent)">4th / 12th</td></tr>
+            <tr><td>Finding Korean titles</td><td class="bcell" style="color:var(--dk-ink2)">no filter existed</td><td class="acell" style="color:var(--dk-accent)">one tap, all 6 on one screen</td></tr>
+            <tr><td>Progress signalling</td><td class="bcell" style="color:var(--dk-ink2)">a 4px bar and small grey text, hidden on phones</td><td class="acell" style="color:var(--dk-accent)">step number, name, segmented bar, and what comes next</td></tr>
+            <tr><td>Preferences on a return visit</td><td class="bcell" style="color:var(--dk-ink2)">start again</td><td class="acell" style="color:var(--dk-accent)">paste a code, change anything, code updates</td></tr>
+            <tr><td>Controls for narrowing the catalogue</td><td class="bcell" style="color:var(--dk-ink2)">chips, a slider, a histogram, more chips</td><td class="acell" style="color:var(--dk-accent)">one pattern, all dropdowns, everything selected by default</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+
+    <figure>
+      <div class="figpanel">
+        <svg viewBox="0 0 740 318" role="img" aria-label="Dumbbell chart of the six Korean titles' positions in the default order, before and after the release">
+          <text x="20" y="24" font-size="10" fill="var(--dk-ink2)" >The six Korean titles: position in the default order of 479</text>
+          <g font-size="10.5" fill="var(--dk-ink)">
+            <text x="118" y="66" text-anchor="end">Squid Game</text>
+            <text x="118" y="102" text-anchor="end">Parasite</text>
+            <text x="118" y="138" text-anchor="end">Burning</text>
+            <text x="118" y="174" text-anchor="end">The Handmaiden</text>
+            <text x="118" y="210" text-anchor="end">Train to Busan</text>
+            <text x="118" y="246" text-anchor="end">Oldboy</text>
+          </g>
+          <g stroke="var(--dk-line)" stroke-width="2">
+            <line x1="134" y1="62" x2="142" y2="62"/>
+            <line x1="143" y1="98" x2="199" y2="98"/>
+            <line x1="200" y1="134" x2="476" y2="134"/>
+            <line x1="224" y1="170" x2="538" y2="170"/>
+            <line x1="229" y1="206" x2="543" y2="206"/>
+            <line x1="291" y1="242" x2="642" y2="242"/>
+          </g>
+          <g fill="none" stroke="var(--chart-muted)" stroke-width="2.5">
+            <circle cx="142" cy="62" r="6"/>
+            <circle cx="199" cy="98" r="6"/>
+            <circle cx="476" cy="134" r="6"/>
+            <circle cx="538" cy="170" r="6"/>
+            <circle cx="543" cy="206" r="6"/>
+            <circle cx="642" cy="242" r="6"/>
+          </g>
+          <g fill="var(--dk-accent)">
+            <circle cx="134" cy="62" r="6.5"/>
+            <circle cx="143" cy="98" r="6.5"/>
+            <circle cx="200" cy="134" r="6.5"/>
+            <circle cx="224" cy="170" r="6.5"/>
+            <circle cx="229" cy="206" r="6.5"/>
+            <circle cx="291" cy="242" r="6.5"/>
+          </g>
+          <g font-size="10" fill="var(--dk-ink2)">
+            <text x="156" y="66">11th → <tspan fill="var(--dk-accent)" font-weight="600">4th</tspan></text>
+            <text x="213" y="102">59th → <tspan fill="var(--dk-accent)" font-weight="600">12th</tspan></text>
+            <text x="490" y="138">291st → <tspan fill="var(--dk-accent)" font-weight="600">60th</tspan></text>
+            <text x="552" y="174">343rd → <tspan fill="var(--dk-accent)" font-weight="600">80th</tspan></text>
+            <text x="557" y="210">347th → <tspan fill="var(--dk-accent)" font-weight="600">84th</tspan></text>
+            <text x="277" y="246" text-anchor="end">430th → <tspan fill="var(--dk-accent)" font-weight="600">136th</tspan></text>
+          </g>
+          <line x1="130" y1="266" x2="700" y2="266" stroke="var(--dk-line)" stroke-width="1.5"/>
+          <g font-size="9.5" fill="var(--dk-ink2)">
+            <text x="130" y="286" text-anchor="middle">1</text>
+            <text x="248" y="286" text-anchor="middle">100</text>
+            <text x="367" y="286" text-anchor="middle">200</text>
+            <text x="487" y="286" text-anchor="middle">300</text>
+            <text x="606" y="286" text-anchor="middle">400</text>
+            <text x="700" y="286" text-anchor="middle">479</text>
+          </g>
+          <g font-size="9.5">
+            <circle cx="136" cy="308" r="5" fill="var(--dk-accent)"/>
+            <text x="147" y="312" fill="var(--dk-ink2)">after the release</text>
+            <circle cx="266" cy="308" r="5" fill="none" stroke="var(--chart-muted)" stroke-width="2.5"/>
+            <text x="277" y="312" fill="var(--dk-ink2)">before</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Positions verified in the shipped build. Lower position numbers sit earlier in the default order.</figcaption>
+    </figure>
+
+    <p class="smallnote measure">A six-title session produces a 26-character code. The mood page runs about 1,200 pixels on a 390-pixel-wide phone, down from a page that also carried a year slider, a histogram, a region chip row and eight viewing-preference options.</p>
+  </div>
+</section>
+
+<section class="sec" id="rice">
+  <div class="wrap">
+    <h2>How I prioritised</h2>
+    <p class="measure lead">These scores were calculated to formalise the order the work actually ran in, using measured reach and the strength of evidence behind each item. They are a record of the reasoning, not a spreadsheet that existed on the day.</p>
+    <p class="measure smallnote">Reach is first visits per month at current volume, roughly 85 (34 over 12 days), reduced for items that only affect people who get further into the journey. Effort is in build days.</p>
+
+    <figure>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>#</th><th>Item</th><th class="num">Reach</th><th class="num">Impact</th><th class="num">Confidence</th><th class="num">Effort</th><th class="num">RICE</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Landing page leads with the product</td><td class="num">85</td><td class="num">3</td><td class="num">70%</td><td class="num">0.5</td><td class="num"><strong>357</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">2</td><td>Step indicator showing position and what comes next</td><td class="num">85</td><td class="num">2</td><td class="num">80%</td><td class="num">0.5</td><td class="num"><strong>272</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">3</td><td>Make the skip real and visible</td><td class="num">28</td><td class="num">2</td><td class="num">100%</td><td class="num">0.25</td><td class="num"><strong>224</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">4</td><td>Region and language discovery</td><td class="num">85</td><td class="num">2</td><td class="num">80%</td><td class="num">1.5</td><td class="num"><strong>90</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">5</td><td>One-card value step replacing per-title reasons</td><td class="num">28</td><td class="num">3</td><td class="num">100%</td><td class="num">2</td><td class="num"><strong>42</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">6</td><td>Copy-first, plus keeping a single title</td><td class="num">10</td><td class="num">2</td><td class="num">70%</td><td class="num">0.5</td><td class="num"><strong>28</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">7</td><td>Catalogue depth beyond 81% US and UK</td><td class="num">85</td><td class="num">2</td><td class="num">60%</td><td class="num">8</td><td class="num"><strong>12.8</strong></td><td><span class="tag defer">Deferred</span></td></tr>
+            <tr><td class="num">8</td><td>The taste code for returning users</td><td class="num">10</td><td class="num">3</td><td class="num">50%</td><td class="num">1.5</td><td class="num"><strong>10</strong></td><td><span class="tag ship">Shipped</span></td></tr>
+            <tr><td class="num">9</td><td>Recommendations matched on actors</td><td class="num">85</td><td class="num">1</td><td class="num">40%</td><td class="num">6</td><td class="num"><strong>5.7</strong></td><td><span class="tag defer">Deferred</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+
+    <figure>
+      <div class="figpanel">
+        <svg viewBox="0 0 740 428" role="img" aria-label="RICE scores sorted: shipped items 357, 272, 224, 90, 42, 28 and 10; deferred items 12.8 and 5.7 shown separately">
+          <text x="20" y="24" font-size="10" fill="var(--ink2)" >Shipped: seven items</text>
+          <g font-size="10.5" fill="var(--ink2)">
+            <text x="262" y="52" text-anchor="end">1. Landing page leads with the product</text>
+            <text x="262" y="88" text-anchor="end">2. Step indicator</text>
+            <text x="262" y="124" text-anchor="end">3. Make the skip real and visible</text>
+            <text x="262" y="160" text-anchor="end">4. Region and language discovery</text>
+            <text x="262" y="196" text-anchor="end">5. One-card value step</text>
+            <text x="262" y="232" text-anchor="end">6. Copy-first, keep a title</text>
+            <text x="262" y="268" text-anchor="end">8. Taste code for returning users</text>
+          </g>
+          <g class="bars" fill="var(--chart-bar)">
+            <rect x="272" y="38" width="400" height="20" rx="4"/>
+            <rect x="272" y="74" width="305" height="20" rx="4"/>
+            <rect x="272" y="110" width="251" height="20" rx="4"/>
+            <rect x="272" y="146" width="101" height="20" rx="4"/>
+            <rect x="272" y="182" width="47" height="20" rx="4"/>
+            <rect x="272" y="218" width="31" height="20" rx="4"/>
+            <rect x="272" y="254" width="11" height="20" rx="3"/>
+          </g>
+          <g font-size="12" font-weight="600" fill="var(--ink)">
+            <text x="680" y="53">357</text>
+            <text x="585" y="89">272</text>
+            <text x="531" y="125">224</text>
+            <text x="381" y="161">90</text>
+            <text x="327" y="197">42</text>
+            <text x="311" y="233">28</text>
+            <text x="291" y="269">10</text>
+          </g>
+          <line x1="20" y1="298" x2="720" y2="298" stroke="var(--line)" stroke-dasharray="5 6"/>
+          <text x="20" y="326" font-size="10" fill="var(--ink2)" >Deferred: two items</text>
+          <g font-size="10.5" fill="var(--ink2)">
+            <text x="262" y="354" text-anchor="end">7. Catalogue depth beyond 81% US and UK</text>
+            <text x="262" y="390" text-anchor="end">9. Recommendations matched on actors</text>
+          </g>
+          <g class="bars" fill="var(--chart-muted)">
+            <rect x="272" y="340" width="14" height="20" rx="3"/>
+            <rect x="272" y="376" width="6" height="20" rx="3"/>
+          </g>
+          <g font-size="12" font-weight="600" fill="var(--ink)">
+            <text x="294" y="355">12.8</text>
+            <text x="286" y="391">5.7</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>RICE scores drawn to a single linear scale, sorted by score, deferred items separated. Item 8 shipped on the lowest score of anything shipped; the notes below say why.</figcaption>
+    </figure>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Why item 8 shipped on the lowest score</h4>
+        <p style="font-size:.92rem;margin:0">It came from one user, so confidence is low, and it only reaches people who finish. It shipped because it was cheap, because it was the only retention mechanism the product had, and because the design turned out to remove a compliance surface rather than add one.</p>
+      </div>
+      <div class="card">
+        <h4>Why item 9 was turned down</h4>
+        <p style="font-size:.92rem;margin:0">It was requested, and turned down. Nothing in the catalogue records who is in anything, so a question about actors would collect an answer with nothing to match against and would not change a single recommendation. Making it real means pulling billed cast for all 479 titles and building a matching rule.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="process">
+  <div class="wrap">
+    <h2>How the release ran</h2>
+    <p class="measure">I did the research first. The changes then went through five rounds of review, and I released them all together at the end of the same day.</p>
+    <ol class="rounds">
+      <li>
+        <h3>Round 1: the main fixes</h3>
+        <p>I replaced the per-title questions with one card and made the skip actually work. I added country and language to all 479 titles, then used them for a region filter, a new default order, region options on the mood step and a 60% cap on any one region in a list. I also changed the landing page to lead with the product, made copying the list the main action and added new analytics events.</p>
+      </li>
+      <li>
+        <h3>Round 2: one pattern for every filter</h3>
+        <p>I turned the chip rows, year slider and histogram into one dropdown pattern, with everything selected by default. The search bar got its own panel, because it wasn't obvious that people could search. I also added the returning-user code and cut the mood page down to about 1,200 pixels on a phone.</p>
+      </li>
+      <li>
+        <h3>Round 3: reordering the journey</h3>
+        <p>I moved the question about what you like to the start, before you pick examples. I cut the categories from ten to eight after a comprehension test, stopped offering the mood step as skippable, and made a restored code editable.</p>
+      </li>
+      <li>
+        <h3>Round 4: showing where you are</h3>
+        <p>Every screen now opens with a large step indicator and a line saying what comes next, because both users had thought they were finished when they weren't. I also moved the code to the top of the results.</p>
+      </li>
+      <li>
+        <h3>Round 5: final wording and release</h3>
+        <p>I finished the category wording and released everything. Then I ran a full journey on the live site to check it, with no errors.</p>
+      </li>
+    </ol>
+
+    <h3 style="margin-top:2.4rem">Trade-offs</h3>
+    <div class="grid2 tradeoffs">
+      <div><h4>Keeping the mood step compulsory</h4><p>I made the first step optional but kept the mood step. Mood is what makes the tool different, so I didn't want to offer it as something to skip.</p></div>
+      <div><h4>Cutting categories I could not explain</h4><p>I removed two categories and renamed one, because if I couldn't explain a category, a user wouldn't understand it either.</p></div>
+      <div><h4>Asking once without losing signal</h4><p>A preference you state now carries a weight of 3.0, against 0.3 for one inherited from a title you picked. That way, asking once didn't weaken the signal.</p></div>
+      <div><h4>Labelling the stretch picks</h4><p>Recommendations from outside the viewer's usual regions sit in their own block with a label. A recommendation someone did not ask for is only worth making if they are told that is what it is.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark doc" id="catalogue">
+  <div class="wrap">
+    <h2>The Korean titles were there all along</h2>
+    <p class="measure lead">User A said the product had no Korean content. It had six Korean titles. She was right about her experience and wrong about the cause:</p>
+    <ul class="measure">
+      <li>Only 4 of the first 72 titles shown were non-Anglophone, and only 1 of the first 24.</li>
+      <li>The default order ran a hand-written popularity list of 148 titles, of which 9 were non-Anglophone, then sorted everything else by year descending, which sank older international cinema.</li>
+      <li>There was no language, country or region filter anywhere in the product.</li>
+    </ul>
+
+    <figure>
+      <div class="figpanel">
+        <svg viewBox="0 0 740 250" role="img" aria-label="Positions of eight titles in the default order of 479: Squid Game 11th, Parasite 59th, Past Lives 112th, Pachinko 193rd, Burning 291st, The Handmaiden 343rd, Train to Busan 347th, Oldboy 430th">
+          <text x="40" y="24" font-size="10" fill="var(--dk-ink2)" >Position in the default order, of 479 titles</text>
+          <!-- first-24 / first-72 shading -->
+          <rect x="40" y="130" width="32" height="40" fill="var(--dk-yellow)" opacity=".22"/>
+          <rect x="40" y="130" width="98" height="40" fill="var(--dk-yellow)" opacity=".14"/>
+          <line x1="72" y1="130" x2="72" y2="170" stroke="var(--dk-yellow)" stroke-width="1" opacity=".6"/>
+          <line x1="138" y1="130" x2="138" y2="170" stroke="var(--dk-yellow)" stroke-width="1" opacity=".6"/>
+          <text x="40" y="196" font-size="9.5" fill="var(--dk-yellow)">first 24: 1 non-Anglophone</text>
+          <text x="40" y="212" font-size="9.5" fill="var(--dk-yellow)" opacity=".8">first 72: 4 non-Anglophone</text>
+          <!-- axis -->
+          <line x1="40" y1="150" x2="700" y2="150" stroke="var(--dk-line)" stroke-width="1.5"/>
+          <g font-size="9.5" fill="var(--dk-ink2)">
+            <text x="40" y="234" text-anchor="middle">1</text>
+            <text x="177" y="234" text-anchor="middle">100</text>
+            <text x="315" y="234" text-anchor="middle">200</text>
+            <text x="453" y="234" text-anchor="middle">300</text>
+            <text x="591" y="234" text-anchor="middle">400</text>
+            <text x="700" y="234" text-anchor="middle">479</text>
+          </g>
+          <g stroke="var(--dk-line)" stroke-width="1">
+            <line x1="177" y1="147" x2="177" y2="153"/><line x1="315" y1="147" x2="315" y2="153"/>
+            <line x1="453" y1="147" x2="453" y2="153"/><line x1="591" y1="147" x2="591" y2="153"/>
+          </g>
+          <!-- leader lines -->
+          <g stroke="var(--dk-line)" stroke-width="1">
+            <line x1="54" y1="66" x2="54" y2="144"/>
+            <line x1="120" y1="101" x2="120" y2="144"/>
+            <line x1="193" y1="66" x2="193" y2="144"/>
+            <line x1="305" y1="101" x2="305" y2="144"/>
+            <line x1="440" y1="66" x2="440" y2="144"/>
+            <line x1="512" y1="101" x2="512" y2="144"/>
+            <line x1="540" y1="66" x2="518" y2="144"/>
+            <line x1="632" y1="101" x2="632" y2="144"/>
+          </g>
+          <!-- dots -->
+          <g>
+            <circle cx="54" cy="150" r="6" fill="var(--dk-accent)"/>
+            <circle cx="120" cy="150" r="6" fill="var(--dk-accent)"/>
+            <circle cx="193" cy="150" r="6" fill="none" stroke="var(--dk-ink2)" stroke-width="2"/>
+            <circle cx="305" cy="150" r="6" fill="none" stroke="var(--dk-ink2)" stroke-width="2"/>
+            <circle cx="440" cy="150" r="6" fill="var(--dk-accent)"/>
+            <circle cx="512" cy="150" r="6" fill="var(--dk-accent)"/>
+            <circle cx="518" cy="150" r="6" fill="var(--dk-accent)" stroke="var(--dk-card)" stroke-width="2"/>
+            <circle cx="632" cy="150" r="6" fill="var(--dk-accent)"/>
+          </g>
+          <!-- labels -->
+          <g font-size="10" fill="var(--dk-ink)">
+            <text x="54" y="58" text-anchor="middle">Squid Game, 11th</text>
+            <text x="120" y="93" text-anchor="middle">Parasite, 59th</text>
+            <text x="193" y="58" text-anchor="middle">Past Lives, 112th</text>
+            <text x="305" y="93" text-anchor="middle">Pachinko, 193rd</text>
+            <text x="440" y="58" text-anchor="middle">Burning, 291st</text>
+            <text x="500" y="93" text-anchor="middle">The Handmaiden, 343rd</text>
+            <text x="560" y="58" text-anchor="middle">Train to Busan, 347th</text>
+            <text x="632" y="93" text-anchor="middle">Oldboy, 430th</text>
+          </g>
+          <!-- legend -->
+          <g font-size="9.5" fill="var(--dk-ink2)">
+            <circle cx="470" cy="196" r="5" fill="var(--dk-accent)"/>
+            <text x="481" y="200">the six Korean titles</text>
+            <circle cx="610" cy="196" r="5" fill="none" stroke="var(--dk-ink2)" stroke-width="2"/>
+            <text x="621" y="200">other audited titles</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Where the audited titles sat in the default order before the release. The shaded region is the first screenfuls a visitor actually saw.</figcaption>
+    </figure>
+
+    <h3 style="margin-top:2.2rem">The catalogue in numbers</h3>
+    <p class="measure">I then fetched country and original language for all 479 titles from the TMDB API. The catalogue is 307 US and 82 UK, so 81% US or UK, with 52 titles in a language other than English and six in Korean: Parasite, Squid Game, Oldboy, The Handmaiden, Burning and Train to Busan.</p>
+
+    <figure>
+      <div class="figpanel">
+        <svg viewBox="0 0 740 168" role="img" aria-label="Catalogue composition: 307 US, 82 UK, 90 from everywhere else; 52 of 479 titles in a language other than English, six of them Korean">
+          <text x="40" y="26" font-size="10" fill="var(--dk-ink2)" >Country, 479 titles</text>
+          <g class="bars">
+            <rect x="40" y="36" width="421" height="26" rx="4" fill="var(--chart-muted)"/>
+            <rect x="465" y="36" width="111" height="26" rx="4" fill="var(--chart-muted)"/>
+            <rect x="580" y="36" width="120" height="26" rx="4" fill="var(--dk-accent)"/>
+          </g>
+          <g font-size="11" font-weight="600" fill="var(--ink)">
+            <text x="50" y="53">US 307</text>
+            <text x="475" y="53">UK 82</text>
+            <text x="590" y="53" fill="var(--bg)">Else 90</text>
+          </g>
+          <text x="40" y="84" font-size="10.5" fill="var(--dk-ink)">81% US or UK</text>
+          <text x="40" y="122" font-size="10" fill="var(--dk-ink2)" >Original language, 479 titles</text>
+          <g class="bars">
+            <rect x="40" y="130" width="586" height="26" rx="4" fill="var(--chart-muted)"/>
+            <rect x="630" y="130" width="70" height="26" rx="4" fill="var(--dk-yellow)"/>
+          </g>
+          <g font-size="11" font-weight="600" fill="var(--ink)">
+            <text x="50" y="147">English 427</text>
+            <text x="638" y="147" fill="var(--bg)">52</text>
+          </g>
+          <text x="700" y="122" font-size="10" fill="var(--dk-yellow)" text-anchor="end">52 non-English, 6 Korean</text>
+        </svg>
+      </div>
+      <figcaption>Composition fetched from the TMDB API for all 479 titles. Six Korean titles: Parasite, Squid Game, Oldboy, The Handmaiden, Burning, Train to Busan.</figcaption>
+    </figure>
+
+    <div class="callout">
+      <div class="t">What this meant</div>
+      <p style="color:var(--ink)">Reach was fixable immediately: surfacing and filtering what already exists is a code change. Depth is a separate, editorial job.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark" id="wireframes">
+  <div class="wrap">
+    <h2>Wireframes</h2>
+    <div class="wires" style="margin-top:1.8rem">
+
+      <!-- Wireframe 1: old optional step -->
+      <div>
+        <div class="phone"><div class="screen">
+          <div class="notch"><i></i></div>
+          <div class="w-h">Why did you like each one?</div>
+          <div class="w-card">
+            <div class="tt"><span class="th"></span><b>Title you picked</b></div>
+            <div class="w-cats"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="w-card">
+            <div class="tt"><span class="th"></span><b>Another title</b></div>
+            <div class="w-cats"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="w-card" style="opacity:.7">
+            <div class="tt"><span class="th"></span><b>Another title</b></div>
+            <div class="w-cats"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="w-card" style="opacity:.4;margin-bottom:-14px">
+            <div class="tt"><span class="th"></span><b>Another title…</b></div>
+          </div>
+          <div class="w-bar"><div class="w-btn ghost">Back</div><div class="w-btn fill">Continue</div></div>
+        </div></div>
+        <div class="wlabel">Before: one expandable card per picked title, 11 category rows inside each, running off the bottom of the screen. No skip anywhere.</div>
+      </div>
+
+      <!-- Wireframe 2: new optional step -->
+      <div>
+        <div class="phone"><div class="screen">
+          <div class="notch"><i></i></div>
+          <div class="w-banner"><b>1 of 4</b>: What you like · Next: the films and series you have enjoyed</div>
+          <div class="w-h">What matters to you?</div>
+          <div class="w-opt"><span><b>This part is optional</b></span><u>Skip to next page</u></div>
+          <div class="w-row"><span class="cb on"></span><div class="rl"><b>Category one</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category two</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb on"></span><div class="rl"><b>Category three</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category four</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category five</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category six</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category seven</b><span>a plain explanation of it</span></div></div>
+          <div class="w-row"><span class="cb"></span><div class="rl"><b>Category eight</b><span>a plain explanation of it</span></div></div>
+          <div class="w-bar"><div class="w-btn ghost">Back</div><div class="w-btn line">Skip this</div><div class="w-btn fill">Continue</div></div>
+        </div></div>
+        <div class="wlabel">After: one card, eight categories, one tap each. A step banner, a highlighted optional line with an inline skip, and a skip button at equal weight in the bottom bar.</div>
+      </div>
+
+      <!-- Wireframe 3: the picker -->
+      <div>
+        <div class="phone"><div class="screen">
+          <div class="notch"><i></i></div>
+          <div class="w-search">
+            <div class="lbl">Looking for something in particular?</div>
+            <div class="w-seg"><i class="on">Everything</i><i>Films</i><i>Series</i></div>
+            <div class="w-dd"><i>Genre: <b>All genres</b></i><i>Made in: <b>Anywhere</b></i></div>
+          </div>
+          <div class="w-grid">
+            <i></i><i class="hi"></i><i></i>
+            <i></i><i></i><i class="hi"></i>
+            <i></i><i></i><i></i>
+            <i class="hi"></i><i></i><i></i>
+          </div>
+        </div></div>
+        <div class="wlabel">The picker: a spotlit search panel, an Everything / Films / Series row, the two dropdowns, then the grid of title cards.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark" id="storyboard" style="padding-top:0">
+  <div class="wrap">
+    <h2>Storyboard: First-Timer Theo's new journey</h2>
+    <div class="story" style="margin-top:1.8rem">
+      <div class="frame">
+        <svg viewBox="0 0 220 170" role="img" aria-label="Sketch: landing page with one line and one button">
+          <rect x="70" y="14" width="80" height="142" rx="10" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="82" y1="52" x2="138" y2="52" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="90" y1="62" x2="130" y2="62" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round"/>
+          <rect x="84" y="80" width="52" height="16" rx="8" fill="var(--yellow)"/>
+          <path d="M104 116 l6 10 l4-5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="ft"><div class="fn">Frame 1: the landing page</div><p>One line on what the tool does, and a button. The explanation is collapsed, not gone.</p></div>
+      </div>
+      <div class="frame">
+        <svg viewBox="0 0 220 170" role="img" aria-label="Sketch: step 1 of 4 with a highlighted optional callout">
+          <rect x="70" y="14" width="80" height="142" rx="10" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <rect x="70" y="14" width="80" height="18" rx="10" fill="var(--ink)" opacity=".14"/>
+          <text x="110" y="27" text-anchor="middle" font-size="8" fill="var(--ink)">1 OF 4</text>
+          <line x1="82" y1="46" x2="126" y2="46" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="80" y="56" width="60" height="16" rx="4" fill="var(--yellow)" opacity=".9"/>
+          <text x="110" y="67" text-anchor="middle" font-size="7" fill="#0D0D0C">OPTIONAL · SKIP</text>
+          <g stroke="var(--ink2)" stroke-width="2" stroke-linecap="round">
+            <line x1="82" y1="86" x2="138" y2="86"/><line x1="82" y1="100" x2="138" y2="100"/>
+            <line x1="82" y1="114" x2="138" y2="114"/><line x1="82" y1="128" x2="138" y2="128"/>
+          </g>
+        </svg>
+        <div class="ft"><div class="fn">Frame 2: step 1 of 4</div><p>"This part is optional" is highlighted, a skip sits beside it, and a line names what comes next.</p></div>
+      </div>
+      <div class="frame">
+        <svg viewBox="0 0 220 170" role="img" aria-label="Sketch: title picker with the region dropdown open">
+          <rect x="70" y="14" width="80" height="142" rx="10" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <rect x="78" y="24" width="64" height="22" rx="5" fill="none" stroke="var(--yellow)" stroke-width="2"/>
+          <rect x="82" y="52" width="28" height="10" rx="5" fill="none" stroke="var(--ink2)" stroke-width="1.5"/>
+          <rect x="114" y="52" width="28" height="10" rx="5" fill="var(--accent)"/>
+          <rect x="114" y="66" width="28" height="30" rx="4" fill="var(--card)" stroke="var(--accent)" stroke-width="1.5"/>
+          <g stroke="var(--ink2)" stroke-width="1.5" stroke-linecap="round">
+            <line x1="119" y1="74" x2="137" y2="74"/><line x1="119" y1="81" x2="137" y2="81"/><line x1="119" y1="88" x2="132" y2="88"/>
+          </g>
+          <g fill="var(--ink)" opacity=".22">
+            <rect x="82" y="104" width="16" height="24" rx="3"/><rect x="102" y="104" width="16" height="24" rx="3"/><rect x="122" y="104" width="16" height="24" rx="3"/>
+            <rect x="82" y="132" width="16" height="18" rx="3"/><rect x="102" y="132" width="16" height="18" rx="3"/><rect x="122" y="132" width="16" height="18" rx="3"/>
+          </g>
+        </svg>
+        <div class="ft"><div class="fn">Frame 3: the picker</div><p>The region dropdown is open over the grid; picking a country narrows it in one tap.</p></div>
+      </div>
+      <div class="frame">
+        <svg viewBox="0 0 220 170" role="img" aria-label="Sketch: results page with the taste code at the top">
+          <rect x="70" y="14" width="80" height="142" rx="10" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <rect x="80" y="24" width="60" height="14" rx="7" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3"/>
+          <text x="110" y="34" text-anchor="middle" font-size="7" fill="var(--accent)">CODE</text>
+          <g>
+            <rect x="80" y="48" width="60" height="20" rx="4" fill="var(--ink)" opacity=".18"/>
+            <rect x="80" y="72" width="60" height="20" rx="4" fill="var(--ink)" opacity=".18"/>
+            <rect x="80" y="96" width="60" height="20" rx="4" fill="var(--ink)" opacity=".18"/>
+          </g>
+          <g fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M132 54 l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6-4.5-4 6-1z" fill="var(--yellow)"/>
+          </g>
+          <rect x="80" y="126" width="60" height="16" rx="8" fill="var(--yellow)"/>
+          <text x="110" y="137" text-anchor="middle" font-size="7" fill="#0D0D0C">COPY LIST</text>
+        </svg>
+        <div class="ft"><div class="fn">Frame 4: the list</div><p>The code sits at the top of the results; copy is the primary action, and a keep control saves a title while reading.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark doc" id="product">
+  <div class="wrap">
+    <h2>Choice paralysis is a data problem</h2>
+    <div class="measure">
+      <p class="lead">The premise: choice paralysis on streaming services is a data problem, not a content problem. A thumbs up records that you liked something, never what you liked about it, so the signal cannot explain itself and cannot be reused.</p>
+      <p>What Can I Watch Now asks the question the thumb never does. It is built on a rating framework I designed: originally 11 categories of reason, 61 specific reasons, and 9 moods, applied by hand to a catalogue of 479 titles, 229 films and 250 series.</p>
+    </div>
+
+    <h3 style="margin-top:2.4rem">The three-stage scoring model</h3>
+    <div class="flow">
+      <div class="st">
+        <div class="sn">Stage 1: descriptive</div><div class="w">0.3</div>
+        <h4>What the title is</h4>
+        <p>A layer carrying each title's own attributes, weighted at 0.3.</p>
+      </div>
+      <div class="st">
+        <div class="sn">Stage 2: diagnostic</div>
+        <h4>Why you liked things</h4>
+        <p>A layer weighting the reasons a viewer states.</p>
+      </div>
+      <div class="st">
+        <div class="sn">Stage 3: predictive</div><div class="w">60 / 25 / 15</div>
+        <h4>What you might like</h4>
+        <p>Taste-profile similarity, co-occurrence across the catalogue, and genre affinity, blended in a 60/25/15 split.</p>
+      </div>
+    </div>
+    <p class="smallnote measure">Mood is applied as a separate re-ranking pass on top of the three stages.</p>
+
+    <h3 style="margin-top:2.2rem">Three balance rules, added after testing</h3>
+    <div class="grid3" style="margin-top:1rem">
+      <div class="st" style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.1rem 1.2rem">
+        <div class="sn" style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.4rem">Rule 1</div>
+        <p style="margin:0;font-size:.92rem">Popularity damping of up to 35%.</p>
+      </div>
+      <div class="st" style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.1rem 1.2rem">
+        <div class="sn" style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.4rem">Rule 2</div>
+        <p style="margin:0;font-size:.92rem">One title per franchise.</p>
+      </div>
+      <div class="st" style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.1rem 1.2rem">
+        <div class="sn" style="font-family:'Public Sans',system-ui,sans-serif;font-size:.66rem;letter-spacing:.1em;color:var(--dk-accent);font-weight:600;margin-bottom:.4rem">Rule 3</div>
+        <p style="margin:0;font-size:.92rem">A film-to-series mix matched to the viewer's own picks.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="background:var(--yellow-wash);margin-top:2.4rem">
+      <div class="t">How it was built</div>
+      <p style="color:var(--ink)">I designed the framework, the taxonomy, the scoring model, the data and the acceptance criteria, and directed the build with an AI coding assistant, verifying behaviour before release. The code was written by the AI under my direction.</p>
+    </div>
+    <p class="smallnote measure">No server, no account, no personal data collected. All scoring runs in the browser. The site is hosted as a static site on Cloudflare Pages, with cookieless analytics.</p>
+  </div>
+</section>
+
+<section class="sec" id="constraints">
+  <div class="wrap">
+    <h2>Constraints</h2>
+    <div class="cons">
+      <div><h4>No server, no accounts, no personal data</h4><p>All scoring runs in the browser on a static site. Saving preferences had to work without storing anything, which is why the code holds the preferences themselves.</p></div>
+      <div><h4>One person</h4><p>I did the research, design, data and requirements myself, with three research participants.</p></div>
+      <div><h4>A small base</h4><p>34 first visits and three interviews. That's enough to decide what to work on, but too few to measure the result.</p></div>
+      <div><h4>A fixed catalogue</h4><p>479 titles classified by hand, 81% US or UK. Surfacing what exists was a code change; adding depth is an editorial job.</p></div>
+      <div><h4>No cast data</h4><p>Nothing in the catalogue records who is in anything, which ruled out matching on actors this release.</p></div>
+      <div><h4>Mostly phones</h4><p>63% of visits were on phones, where the only "optional" wording had been hidden below 560 pixels of width.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="discarded">
+  <div class="wrap">
+    <h2>A metric I discarded</h2>
+    <div class="grid2" style="align-items:start">
+      <div class="measure">
+        <p class="lead">Cloudflare reported 3,787 page views and 864 daily unique addresses over five days, against the funnel's 107 visits.</p>
+        <p>The country breakdown gave it away: single days with 277 requests from Brazil, 277 from India, 263 from Indonesia and 261 from the Netherlands. That is crawler traffic on a newly published domain.</p>
+        <p>I used the smaller, real number as the denominator and kept Cloudflare only as confirmation the site was being indexed.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="figpanel">
+          <svg viewBox="0 0 640 236" role="img" aria-label="Bar chart comparing Cloudflare's reported 3,787 page views with the funnel's 107 visits, and single-day crawler request counts by country">
+            <g font-size="11" fill="var(--ink2)">
+              <text x="150" y="40" text-anchor="end">Cloudflare page views</text>
+              <text x="150" y="76" text-anchor="end">Funnel visits</text>
+            </g>
+            <rect x="160" y="26" width="460" height="20" rx="4" fill="var(--chart-muted)"/>
+            <rect x="160" y="62" width="13" height="20" rx="3" fill="var(--chart-bar)"/>
+            <text x="612" y="40" text-anchor="end" font-size="12.5" font-weight="600" fill="var(--ink)">3,787</text>
+            <text x="181" y="76" font-size="12.5" font-weight="600" fill="var(--ink)">107</text>
+            <text x="160" y="116" font-size="10" fill="var(--ink2)" >Single-day requests by country</text>
+            <g font-size="11" fill="var(--ink2)">
+              <text x="150" y="142" text-anchor="end">Brazil</text>
+              <text x="150" y="168" text-anchor="end">India</text>
+              <text x="150" y="194" text-anchor="end">Indonesia</text>
+              <text x="150" y="220" text-anchor="end">Netherlands</text>
+            </g>
+            <g class="bars" fill="var(--chart-muted)">
+              <rect x="160" y="130" width="460" height="14" rx="3"/>
+              <rect x="160" y="156" width="460" height="14" rx="3"/>
+              <rect x="160" y="182" width="437" height="14" rx="3"/>
+              <rect x="160" y="208" width="433" height="14" rx="3"/>
+            </g>
+            <g font-size="11.5" font-weight="600" fill="var(--ink)">
+              <text x="612" y="141" text-anchor="end">277</text>
+              <text x="612" y="167" text-anchor="end">277</text>
+              <text x="589" y="193" text-anchor="end">263</text>
+              <text x="585" y="219" text-anchor="end">261</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Reported traffic against measured funnel visits, five days. Country bars are single-day request counts, drawn on their own scale. The 107 is the denominator used everywhere on this page.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-alt" id="shipped">
+  <div class="wrap">
+    <h2>The five requirement sets</h2>
+    <p class="measure lead">These are the requirements for the release, in five sets. Each one covers the user problem, the persona it serves, the pain points, the requirements, what's out of scope and how it'll be measured.</p>
+
+    <!-- 1 -->
+    <article class="req">
+      <div class="rhead" id="req1"><span class="rn">1</span><h3>The optional step</h3><span class="rserves">Serves persona 3, persona 2 secondarily</span></div>
+      <div class="rbody">
+        <div class="rcol">
+          <h5>User problem</h5>
+          <p style="font-size:.9rem">User B picked lots of titles, thought that was the end, then met a screen asking why he liked each one and gave up. User A, who had picked a lot of titles, found that many options daunting, and never noticed the step was optional.</p>
+          <h5>Pain points</h5>
+          <ul>
+            <li>A per-title question repeated across every pick.</li>
+            <li>On phones there was no skip control and no optional wording at all.</li>
+            <li>The model pooled every per-title answer into one global tally, so the repetition was work it then discarded.</li>
+          </ul>
+        </div>
+        <div class="rcol">
+          <h5>Requirements</h5>
+          <ul>
+            <li>One card asking what the user values, no per-title repetition.</li>
+            <li>Eight categories, one tap each, each with a plain explanation visible at phone width.</li>
+            <li>A skip control at equal visual weight to the primary action, plus an inline skip in the page body and a highlighted optional statement under the heading.</li>
+            <li>No loss of scoring signal: a single stated preference carries the weight repetition used to.</li>
+          </ul>
+          <div class="oos"><b>Out of scope</b>Sampling a subset of titles to ask about. Rejected because it is still a per-title task and the basis of the selection cannot be explained to the user.</div>
+          <h5 style="margin-top:1em">Metrics</h5>
+          <ul style="margin-bottom:0">
+            <li>Value step completed or skipped; skips by step.</li>
+            <li>Completion from first visit, 12% baseline, 25% target.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="req">
+      <div class="rhead" id="req2"><span class="rn">2</span><h3>Regional and language discovery</h3><span class="rserves">Serves persona 2</span></div>
+      <div class="rbody">
+        <div class="rcol">
+          <h5>User problem</h5>
+          <p style="font-size:.9rem">User A could not select any Korean shows or films from the list of titles, and the mood step offered no international options, so her choices felt limited to Western and Hollywood productions.</p>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Only 1 of the first 24 titles shown was non-Anglophone.</li>
+            <li>No language, country or region filter anywhere in the product.</li>
+            <li>Six Korean titles existed but sat as deep as 430th in the default order.</li>
+          </ul>
+        </div>
+        <div class="rcol">
+          <h5>Requirements</h5>
+          <ul>
+            <li>Country and original language on all 479 titles.</li>
+            <li>A region filter in the picker, and region plus language on the mood step.</li>
+            <li>Default ordering that surfaces non-US/UK titles early, drawing subtitled titles forward first.</li>
+            <li>A cap on how much of a result list comes from one region.</li>
+            <li>A separate labelled block of recommendations from a region none of the user's picks came from.</li>
+          </ul>
+          <div class="oos"><b>Out of scope</b>Expanding the catalogue.</div>
+          <h5 style="margin-top:1em">Metrics</h5>
+          <ul style="margin-bottom:0">
+            <li>Region and language filter use.</li>
+            <li>Non-US/UK titles in the first 24 shown: 1 before, 6 in the shipped build.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="req">
+      <div class="rhead" id="req3"><span class="rn">3</span><h3>Knowing where you are in the journey</h3><span class="rserves">Serves persona 3, and everyone who left the landing page</span></div>
+      <div class="rbody">
+        <div class="rcol">
+          <h5>User problem</h5>
+          <p style="font-size:.9rem">23 of 34 people landed and never started at all, and User B taps Continue expecting a list because nothing told him what came next.</p>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Progress signalling was a 4px bar and small grey text, hidden on phones.</li>
+            <li>The landing page led with explanation rather than the product.</li>
+          </ul>
+        </div>
+        <div class="rcol">
+          <h5>Requirements</h5>
+          <ul>
+            <li>A prominent step indicator on every screen with number, step name, segmented progress and a line naming what comes next.</li>
+            <li>A compact position marker in the sticky header.</li>
+            <li>A landing page that leads with the action, with the explanation collapsed.</li>
+            <li>Steps reordered so that stating what you like precedes giving examples of it.</li>
+          </ul>
+          <div class="oos"><b>Out of scope</b>Moving the title picker itself onto the landing page, deferred so the contained version can be measured first.</div>
+          <h5 style="margin-top:1em">Metrics</h5>
+          <ul style="margin-bottom:0">
+            <li>Landing to first step, 32% baseline, 50% target.</li>
+            <li>Journey step reached, renamed to match the new step order.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="req">
+      <div class="rhead" id="req4"><span class="rn">4</span><h3>Returning without repeating</h3><span class="rserves">Serves persona 4</span></div>
+      <div class="rbody">
+        <div class="rcol">
+          <h5>User problem</h5>
+          <p style="font-size:.9rem">User C asked whether preferences could be saved, so that coming back later in a completely different mood would not mean doing the whole journey again.</p>
+          <h5>Pain points</h5>
+          <ul>
+            <li>A return visit meant starting again from nothing.</li>
+          </ul>
+          <div class="callout" style="margin:1.2rem 0 0">
+            <div class="t">Why this matters</div>
+            <p style="font-size:.88rem">Because nothing is stored, there is no consent banner to maintain and nothing to delete on request. Working within the privacy constraint made this a better feature.</p>
+          </div>
+        </div>
+        <div class="rcol">
+          <h5>Requirements</h5>
+          <ul>
+            <li>A code generated at the end holding the user's titles, categories, moods, date range, region, language and viewing preferences.</li>
+            <li>The code encodes the preferences themselves, so no server, no account and no stored record.</li>
+            <li>It appears on the results page and in the copied and emailed list, and can be pasted on the landing page to arrive at the mood step.</li>
+            <li>Restoring it offers a visible route back into the earlier answers, and changing anything regenerates the code.</li>
+          </ul>
+          <div class="oos"><b>Out of scope</b>Accounts, sign-in, any server-side storage.</div>
+          <h5 style="margin-top:1em">Metrics</h5>
+          <ul style="margin-bottom:0">
+            <li>Sessions started from a code: 0 baseline, any measurable use as the target.</li>
+            <li>Code copied, code used, answers edited after a code restore.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="req">
+      <div class="rhead" id="req5"><span class="rn">5</span><h3>Leaving with the list</h3><span class="rserves">Serves every finisher</span></div>
+      <div class="rbody">
+        <div class="rcol">
+          <h5>User problem</h5>
+          <p style="font-size:.9rem">No copy or email event had ever fired, so none of the four finishers took their list away.</p>
+          <h5>Pain points</h5>
+          <ul>
+            <li>A finished list that stayed on the results page.</li>
+          </ul>
+        </div>
+        <div class="rcol">
+          <h5>Requirements</h5>
+          <ul>
+            <li>Copy becomes the primary action, with the email handoff secondary.</li>
+            <li>A keep control on each recommendation so a title can be saved while reading.</li>
+            <li>Kept titles appear first in the copied and emailed text.</li>
+          </ul>
+          <div class="oos"><b>Out of scope</b>A mailing list, or any capture of an email address.</div>
+          <h5 style="margin-top:1em">Metrics</h5>
+          <ul style="margin-bottom:0">
+            <li>Finishers taking the list away: 0% baseline, 40% target.</li>
+            <li>Titles kept.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="sec" id="scenarios">
+  <div class="wrap">
+    <h2>Two scenarios, before and after</h2>
+
+    <h3 style="margin-top:1.8rem">Scenario A: Persona 3, First-Timer Theo</h3>
+    <div class="scn">
+      <div class="sc before">
+        <div class="sl">Before</div>
+        <p>Opens a link from LinkedIn on his phone. Reads four paragraphs explaining how the tool works. Taps Start. Picks fifteen titles he likes. Taps Continue expecting a list. Gets a screen of fifteen cards, each asking why. Closes the tab.</p>
+      </div>
+      <div class="sc after">
+        <div class="sl">After</div>
+        <p>Opens the same link. Sees one line on what the tool does and a button. Taps it. Lands on step 1 of 4, which says what he likes, with a highlighted line reading "This part is optional" and a skip beside it, and a line below saying what comes next. Picks three things that matter to him, or skips. Step 2 of 4 is the titles. Step 3 is the mood. Step 4 is the list.</p>
+      </div>
+    </div>
+
+    <h3>Scenario B: Persona 2, K-Drama Kate</h3>
+    <div class="scn" style="margin-bottom:0">
+      <div class="sc before">
+        <div class="sl">Before</div>
+        <p>Picks her titles. Scrolls a grid of American sitcoms looking for anything Korean. Finds Squid Game at position 11 and nothing else without paging five times. Gets recommendations that look like everyone else's.</p>
+      </div>
+      <div class="sc after">
+        <div class="sl">After</div>
+        <p>Opens the picker, taps the "Made in" dropdown, taps Korea, sees six of six on one screen. On the mood step she sets a language preference. Her list comes back Korean, with a block underneath labelled "Outside what you usually pick" naming the region it came from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="gtm">
+  <div class="wrap">
+    <h2>Go-to-market</h2>
+    <div class="grid2" style="align-items:start">
+      <div>
+        <p class="measure lead">So far, the product has had one release, launched only through my own channels, with no paid acquisition.</p>
+        <ul class="measure">
+          <li><strong>Channels used so far:</strong> a LinkedIn post and a Substack technical write-up of how the model works.</li>
+          <li><strong>Measured result:</strong> <span class="mono">from/linkedin</span> fired 6 times, <span class="mono">from/substack</span> never. All other traffic was direct, with 2 referrals from Google. Either the Substack link was untagged or the post sent nobody, and that is worth checking before drawing a conclusion.</li>
+          <li>Every visit is currently earned, so a visitor who leaves the landing page without starting is wasted reach. That is what makes activation the primary metric rather than traffic.</li>
+        </ul>
+      </div>
+      <figure style="margin:0">
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Metric</th><th>Baseline</th><th>Target</th></tr></thead>
+            <tbody>
+              <tr><td>Tagged inbound by source</td><td class="num">LinkedIn 6, Substack 0</td><td>every channel link tagged</td></tr>
+              <tr><td>Landing to first step</td><td class="num">32%</td><td class="num"><strong>50%</strong></td></tr>
+              <tr><td>Completion from first visit</td><td class="num">12%</td><td class="num"><strong>25%</strong></td></tr>
+              <tr><td>Finishers taking the list away</td><td class="num">0%</td><td class="num"><strong>40%</strong></td></tr>
+              <tr><td>Sessions started from a code</td><td class="num">0</td><td>any measurable use</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>The GTM metrics the next read runs on. Targets are directional until roughly 150 first visits have accumulated.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-dark doc" id="notdone">
+  <div class="wrap">
+    <h2>What I chose not to do</h2>
+    <div class="grid3" style="margin-top:1.8rem">
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Catalogue depth</h4>
+        <p style="font-size:.9rem;color:var(--dk-ink2);margin:0">Still 81% US and UK with six Korean titles. The filter shows what exists. Adding depth means tagging more titles, which is editorial work.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Actor matching</h4>
+        <p style="font-size:.9rem;color:var(--dk-ink2);margin:0">Requested, and turned down for this release, because nothing in the catalogue records who is in anything.</p>
+      </div>
+      <div style="background:var(--dk-card);border:1px solid var(--dk-line);border-radius:10px;padding:1.2rem 1.3rem">
+        <h4 style="color:var(--dk-ink)">Moving the picker onto the landing page</h4>
+        <p style="font-size:.9rem;color:var(--dk-ink2);margin:0">The stronger version of the landing page fix, deferred so the contained version can be measured first.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.6rem">Instrumentation added</h3>
+    <p class="measure" style="color:var(--dk-ink2)">Titles picked, banded. Value step completed or skipped. Skips by step. Region and language filter use. Code copied, code used, answers edited after a code restore. Titles kept. Journey step reached, renamed to match the new step order, so the series before and after this release must not be read as one.</p>
+  </div>
+</section>
+
+<section class="sec" id="results">
+  <div class="wrap">
+    <h2>Results so far</h2>
+    <p class="measure">I don't have outcome data yet. What I do have is proof that each change works as intended, and baselines to compare the next funnel read against.</p>
+    <div class="grid2">
+      <div class="resbox">
+        <h4>Verified in the shipped build</h4>
+        <ul>
+          <li>Non-US/UK titles in the first 24 shown: 1 before, 6 after.</li>
+          <li>Oldboy moved from 430th to 136th in the default order.</li>
+          <li>Filtering to Korea shows all six Korean titles on one screen.</li>
+          <li>A six-title session produces a 26-character code that restores the whole session.</li>
+        </ul>
+        <p><a href="#beforeafter">All before-and-after figures</a></p>
+      </div>
+      <div class="resbox">
+        <h4>Targets for the next read</h4>
+        <ul>
+          <li>Landing to first step: 32% now, 50% target.</li>
+          <li>Completion from first visit: 12% now, 25% target.</li>
+          <li>Finishers taking the list away: 0% now, 40% target.</li>
+          <li>No target is read before roughly 150 first visits.</li>
+        </ul>
+        <p><a href="#gtm">Go-to-market metrics</a></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.4rem">What I learned</h3>
+    <ol class="learn">
+      <li><b>Interviews only reach people who've already agreed to take part.</b> The biggest drop-off (23 of 34 people never starting) only showed up in the funnel.</li>
+      <li><b>Check the product before acting on the diagnosis.</b> Users said they had not noticed the skip. Taking that at face value would have meant making the skip button more prominent, and there was no skip button.</li>
+      <li><b>The ranking mattered more than the catalogue.</b> The Korean titles were there all along, just ranked too low for anyone to find them.</li>
+      <li><b>If I can't explain an option, a user won't understand it.</b> That test cut two categories.</li>
+      <li><b>The privacy constraint made the feature better.</b> Because nothing is stored, there is no consent banner and nothing to delete on request.</li>
+      <li><b>Releasing everything at once makes results hard to attribute.</b> The next read will show whether the journey improved, but not which change did it.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec caveats" id="caveats">
+  <div class="wrap">
+    <h2>Caveats</h2>
+    <div class="grid3" style="margin-top:1.8rem">
+      <div class="card">
+        <div class="cnum">Caveat 1</div>
+        <p>No outcome data exists. Everything shipped in one release, so the next funnel read will show whether the journey improved but not which change did it.</p>
+      </div>
+      <div class="card">
+        <div class="cnum">Caveat 2</div>
+        <p>The base is small. 34 first visits and three interviews. This is directional evidence, not measurement. No target should be read before roughly 150 first visits have accumulated.</p>
+      </div>
+      <div class="card">
+        <div class="cnum">Caveat 3</div>
+        <p>Figures marked as shipped and verified are verified behaviours of the build, not results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="credits">
+  <div class="wrap">
+        <p class="mono">All figures on this page come from the product's own cookieless analytics, moderated sessions and build checks, up to the release. Persona photographs are free stock imagery from Unsplash, not the research participants: <a href="https://unsplash.com/@nkhill" target="_blank" rel="noopener">Nikhil Pillai</a>, <a href="https://unsplash.com/@jonathanborba" target="_blank" rel="noopener">Jonathan Borba</a>, <a href="https://unsplash.com/@juanencalada" target="_blank" rel="noopener">Juan Encalada</a> and <a href="https://unsplash.com/@j_erhunse" target="_blank" rel="noopener">Jeffery Erhunse</a>.</p>
+  </div>
+</section>
+</main>
+<section class="next-case">
+  <div class="wrap">
+    <div><p class="kicker" style="margin-bottom:.4rem">Where next</p><h2>Thanks for reading.</h2></div>
+    <div class="btnrow" style="margin:0"><a class="btn btn-primary" href="work.html">All case studies</a><a class="btn btn-ghost" href="https://www.linkedin.com/in/ayoimhotep" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ext"><path d="M7 17L17 7M9 7h8v8"/></svg></a></div>
+  </div>
+</section>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p class="f-name">Ayodele Imhotep</p>
+      <p>The figures in these case studies come from each product's own analytics, user sessions and checks of the live build.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="index.html">Home</a><a href="work.html">Work</a><a href="https://www.linkedin.com/in/ayoimhotep" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  // ===== case bar: current section, progress, contents panel =====
+  var tocLinks=[].slice.call(document.querySelectorAll('[data-toc]'));
+  var map=tocLinks.map(function(a){return {a:a, el:document.getElementById(a.getAttribute('href').slice(1))}}).filter(function(m){return m.el});
+  var cur=document.getElementById('curSection'), bar=document.getElementById('readProgress');
+  function spy(){
+    var y=window.scrollY+140, active=null;
+    map.forEach(function(m){ if(m.el.getBoundingClientRect().top+window.scrollY<=y) active=m; });
+    tocLinks.forEach(function(a){a.classList.remove('on')});
+    if(active){active.a.classList.add('on'); cur.textContent=active.a.textContent;} else {cur.textContent='Overview';}
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    if(bar) bar.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';
+  }
+  window.addEventListener('scroll',function(){window.requestAnimationFrame(spy)},{passive:true}); spy();
+  var panel=document.getElementById('tocPanel'), open=document.getElementById('tocOpen'), lastFocus=null;
+  function show(){ lastFocus=document.activeElement; panel.hidden=false; open.setAttribute('aria-expanded','true'); var on=panel.querySelector('a.on')||panel.querySelector('a'); if(on) on.focus(); document.addEventListener('keydown',esc); }
+  function hide(){ panel.hidden=true; open.setAttribute('aria-expanded','false'); document.removeEventListener('keydown',esc); if(lastFocus) lastFocus.focus(); }
+  function esc(e){ if(e.key==='Escape') hide(); }
+  open.addEventListener('click',show);
+  [].slice.call(panel.querySelectorAll('[data-toc-close]')).forEach(function(b){b.addEventListener('click',hide)});
+  tocLinks.forEach(function(a){a.addEventListener('click',function(){ panel.hidden=true; open.setAttribute('aria-expanded','false'); document.removeEventListener('keydown',esc); })});
+
+  // ===== motion =====
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    var sel='.figpanel';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    els.forEach(function(el){el.classList.add('rv')});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var el=e.target;
+          var sibs=els.filter(function(x){return x.parentNode===el.parentNode});
+          var idx=sibs.indexOf(el);
+          el.style.transitionDelay=(Math.max(0,idx)%6*70)+'ms';
+          el.classList.add('in');
+          io.unobserve(el);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el)});
+    // count-up for hero stats
+    var counters=[].slice.call(document.querySelectorAll('.hero-stats .n'));
+    var cio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el=e.target; cio.unobserve(el);
+        var raw=el.textContent.trim(); var suffix=raw.replace(/[0-9]/g,''); var target=parseInt(raw,10);
+        if(isNaN(target)) return;
+        var t0=null;
+        function step(t){
+          if(!t0)t0=t; var p=Math.min(1,(t-t0)/900); p=1-Math.pow(1-p,3);
+          el.textContent=Math.round(target*p)+suffix;
+          if(p<1)requestAnimationFrame(step); else el.textContent=raw;
+        }
+        requestAnimationFrame(step);
+      });
+    },{threshold:0.5});
+    counters.forEach(function(el){cio.observe(el)});
+  } else {
+    [].slice.call(document.querySelectorAll('.figpanel')).forEach(function(f){f.classList.add('in')});
+  }
+})();
+</script>
+<script src="site.js"></script>
+</body>
+</html>
